@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <title>Artwork Detail</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background: #191a1c;
+      color: #fff;
+      font-family: 'League Spartan', sans-serif;
+    }
+/* Navbar: palette colors top (opacity 1) -> bottom (opacity 0) over black */
+  .navbar {
+  z-index: 1000;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  background: linear-gradient(
+    90deg,
+    rgba(156,210,254) 0%,
+    rgba(190, 197, 249) 25%,   /* ฟ้าเข้มบนสุด */
+    rgb(248, 191, 246) 50%,
+    rgba(255, 248, 188) 75%,   /* ฟ้าเข้มบนสุด */
+    rgb(181, 252, 246) 100%/* เขียวมิ้นต์จาง */
+    
+  );
+  box-shadow: 0 3px 5px #b0a5af;
+  padding: 0;
+}
+.navbar .container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* logo ซ้าย, menu ขวา */
+}
+
+
+/* Utility class: apply palette background to sections */
+.bg-palette {
+  background:
+    radial-gradient(420px 260px at 10% 20%, rgba(156,210,254,0.14), transparent 18%),
+    radial-gradient(360px 220px at 90% 80%, rgba(190,197,249,0.10), transparent 14%),
+    linear-gradient(180deg, rgba(255,255,255,0.6), rgba(255,255,255,0.25));
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(2,6,23,0.06);
+}
+
+.navbar-brand img {
+  display: block;
+  width: auto;
+  max-height: 40px;      /* mobile */
+  height: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 6px 18px rgba(2,6,23,0.06));
+}
+
+/* Medium and up */
+@media (min-width: 768px) {
+  .navbar-brand img { max-height: 30px; }
+}
+
+/* Large and up */
+@media (min-width: 1200px) {
+  .navbar-brand img { max-height: 40px; }
+}
+
+/* Optional: adjust brand font-size if using text */
+.navbar-brand .brand-text,
+.navbar-brand.logo-text {
+  font-size: 1.25rem;
+}
+
+/* Nav links */
+.navbar .nav-link{
+  font-size: 25px;
+  font-weight:600;
+  color: #000;
+  transition: color .22s ease, background .22s ease;
+  background: transparent;
+  border-radius: 8px;
+  padding: .35rem .35rem;
+  padding-top: 0.6rem;
+  margin: 0;
+}
+.navbar .nav-link:hover,
+.navbar .nav-link:focus{
+  color: #f8bff6;
+  background: linear-gradient(90deg, rgba(156,210,254,0.18), rgba(181,252,246,0.08));
+  box-shadow: 0 8px 22px rgba(6,35,58,0.06);
+  transform: translateY(-2px);
+}
+
+/* Make active / current link stand out */
+.navbar .nav-link.active{
+  color: #fff;
+  background: #58616a;
+  border-radius: 12px;
+  padding: .35rem 0;
+  box-shadow: 0 14px 36px rgba(6,35,58,0.10);
+  transform: translateY(-10px);
+  transition: transform .45s cubic-bezier(.22,.9,.35,1), opacity .35s ease;
+}
+
+/* Toggler button (visible on light bg) */
+.navbar .navbar-toggler {
+  border: 1px solid rgba(6,35,58,0.06);
+  background: linear-gradient(180deg, rgba(255,255,255,0.85), rgba(255,255,255,0.7));
+  transition: background .18s ease, transform .12s ease;
+}
+.navbar .navbar-toggler:active,
+.navbar .navbar-toggler:focus {
+  transform: scale(.98);
+}
+
+/* Toggler icon color */
+.navbar-light .navbar-toggler-icon{
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='%23222' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+}
+
+/* Remove default caret */
+.dropdown-toggle::after{ display:none !important; }
+
+/* Cards / content */
+main .card{
+  border:0;
+  border-radius:12px;
+  overflow:hidden;
+  box-shadow: 0 10px 30px var(--shadow);
+}
+.card .card-body { background: linear-gradient(180deg, rgba(255,255,255,0.85), rgba(255,255,255,0.95)); }
+
+/* ---------- Dropdown slide & color styling ---------- */
+/* Dropdown color theme (replace previous dropdown rules) */
+.dropdown { position: relative; }
+
+.dropdown-menu{
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 1200;
+  display: block;
+  min-width: 200px;
+  border-radius: 12px;
+  /* new background using palette */
+  background: #333 ;
+  text-shadow: 0px 0px 3px #000000;
+  border: 1px solid rgba(6,35,58,0.06);
+  box-shadow: 0 10px 15px rgba(255, 255, 255, 0.1);
+  padding: .35rem 0;
+  transform: translateY(-10px);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: transform .45s cubic-bezier(.22,.9,.35,1), opacity 0.35s ease, visibility .01s linear;
+  will-change: transform, opacity;
+  color: var(--text);
+}
+
+/* visible state */
+.dropdown.show > .dropdown-menu,
+.dropdown-menu.show {
+  transform: translateY(0);
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+/* dropdown items color */
+.dropdown-item{
+  color: #fff;
+  padding: .5rem 1rem;
+  transition: background .18s ease, color .12s ease;
+}
+
+/* item hover/focus - brighter gradient accent */
+.dropdown-item:hover,
+.dropdown-item:focus{
+  background: rgb(245, 200, 245);
+  color: #000;
+  transform: translateX(2px);
+}
+
+/* closing state */
+.dropdown.closing > .dropdown-menu,
+.dropdown-menu.closing{
+  transform: translateY(-14px);
+  opacity: 0;
+  visibility: visible;
+  pointer-events: none;
+}
+
+/* keep hover behavior on pointer devices */
+@media (hover: hover) and (pointer: fine){
+  .dropdown:hover > .dropdown-menu,
+  .dropdown:focus-within > .dropdown-menu{
+    transform: translateY(0);
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+  }
+}
+
+/* Accessibility: keyboard focus shows menu */
+.dropdown:focus-within > .dropdown-menu{
+  transform: translateY(0);
+  opacity:1;
+  visibility:visible;
+  pointer-events:auto;
+}
+
+/* Small polish for page */
+/* Responsive spacing */
+@media (min-width:768px){
+  .navbar .nav-item + .nav-item{ margin-left:1.25rem; }
+  .dropdown-menu{ min-width:220px; }
+}
+
+/* Footer / minor accents (use palette) */
+a.logo-accent{ color: var(--c1); font-weight:700; }
+.badge-palette{
+  background: linear-gradient(90deg,var(--c1),var(--c2));
+  color:#082032;
+  border-radius:999px;
+  padding:.25rem .6rem;
+}
+.navbar-brand {
+  display: inline-flex;
+  align-items: center;
+  transition: transform 0.18s ease, filter 0.18s ease, box-shadow 0.18s ease;
+}
+
+.navbar-brand:hover,
+.navbar-brand:focus {
+  transform: scale(1.08); /* ขยายเล็กน้อย */
+  filter: drop-shadow(0 8px 20px rgba(2,6,23,0.1)); /* เงาเบา */
+  cursor: pointer;
+}
+
+    /* โครงสร้างหน้า */
+    .detail-wrapper {
+      max-width: 1150px;
+      margin: 70px auto;
+      display: flex;
+      gap: 70px;
+      padding: 10px 20px;
+      align-items: center; /* ⭐ ซ้าย-ขวาอยู่ระดับเดียวกัน */
+    }
+
+    /* กล่องรูปฝั่งซ้าย */
+    .left-box {
+      width: 100%;
+      display: flex;
+      justify-content: center;  /* ⭐ กลางแนวนอน */
+      align-items: center;      /* ⭐ กลางแนวตั้ง */
+      height: 620px;            /* ⭐ ทำให้รูปกลางจริง */
+    }
+
+    /* รูปใหญ่ */
+    .left-box img {
+      max-width: 95%;
+      height: auto;
+      border-radius: 20px;
+      object-fit: contain;      /* ⭐ ทำให้รูปไม่โดนบีบ ไม่โดนครอป */
+      box-shadow: 0 6px 18px rgba(0,0,0,0.25);
+    }
+
+    /* การ์ดข้อมูล */
+    .detail-card {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+      margin-top: 5px;
+    }
+
+    .detail-item {
+      background: #fff;
+      color: #111;
+      border-radius: 16px;
+      padding: 20px 30px;
+      display: flex;
+      gap: 15px;
+      align-items: center;
+      box-shadow: 0 6px 12px rgba(0,0,0,0.18);
+      font-size: 1.2rem;
+    }
+
+    .label {
+      font-weight: 800;
+      min-width: 250px;
+    }
+
+    /* ไอคอนล่าง */
+    .mini-gallery {
+      margin-top: 25px;
+      display: flex;
+      gap: 25px;
+      justify-content: flex-start;
+    }
+
+    .mini-gallery img {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      object-fit: cover;
+      transition: transform 0.25s ease, opacity 0.25s ease;
+      cursor: pointer;
+      box-shadow: 0 5px 12px rgba(0,0,0,0.35);
+    }
+
+    .mini-gallery img:hover {
+      transform: scale(1.12);
+      opacity: 0.95;
+    }
+
+    /* มือถือ & แท็บเล็ต */
+    @media (max-width: 850px) {
+      .detail-wrapper {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .left-box {
+        width: 100%;
+        height: auto;
+      }
+
+      .left-box img {
+        width: 90%;
+      }
+
+      .detail-card {
+        width: 90%;
+        margin-top: 30px;
+      }
+
+      .mini-gallery {
+        justify-content: center;
+      }
+    }
+    .breadcrumbs a {
+    color: #ffffff;
+    text-decoration: none;
+    }
+
+    .breadcrumbs span {
+    opacity: 0.6;
+    }
+    .footer {
+    background: linear-gradient(to right, #b4f0ff, #e0c3fc, #fbc2eb);
+    color: #000;
+    padding: 20px 0;
+    text-align: center;
+    font-weight: 600;
+    width: 100%;
+    margin-top: 0;
+    }
+    body {
+    background: #191a1c;
+    color: #fff;
+    font-family: 'League Spartan', sans-serif;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- navbar -->
+  <nav class="navbar navbar-expand-md navbar-light navbar-gradient">
+    <div class="container">
+      <a class="navbar-brand fw-bold mb-0" href="index.html">
+        <img src="logowebsticker.webp" alt="logo">
+      </a>
+
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="mainNav">
+        <ul class="navbar-nav ms-auto align-items-center">
+          <li class="nav-item"><a class="nav-link" href="index.html">home</a></li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="work.html" id="workDropdown" data-bs-toggle="dropdown">work</a>
+            <ul class="dropdown-menu dropdown-menu-end">
+              <li><a class="dropdown-item" href="drawing.html">Drawing</a></li>
+              <li><a class="dropdown-item" href="graphic.html">Graphic</a></li>
+              <li><a class="dropdown-item" href="photo.html">Photo</a></li>
+              <li><a class="dropdown-item" href="3D.html">3D Model</a></li>
+            </ul>
+          </li>
+          <li class="nav-item"><a class="nav-link" href="team.html">team</a></li>
+          <li class="nav-item"><a class="nav-link" href="contact.html">contact</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- กล่องรายละเอียด -->
+  <div class="detail-wrapper">
+    
+    <!-- รูปใหญ่ (อยู่ตรงกลางฝั่งซ้ายแล้ว) -->
+    <div class="left-box">
+      <img id="artImage" src="" alt="Artwork">
+    </div>
+    
+    <!-- ข้อมูล -->
+    <div class="detail-card">
+      <div class="breadcrumbs">
+    <a href="index.html">Home</a>
+    <span>/</span>
+    <a href="work.html">Work</a>
+    <span>/</span>
+    <a href="photo.html">Photo</a>
+    <span>/</span>
+    <a id="crumb-art" href="art-detailphoto.html">Artwork</a>
+    </div>
+
+      <div class="detail-item">
+        <div class="label">Artwork Name:</div>
+        <div id="artName"></div>
+      </div>
+
+      <div class="detail-item">
+        <div class="label">Price:</div>
+        <div id="artPrice"></div>
+      </div>
+
+      <div class="detail-item">
+        <div class="label">Artist:</div>
+        <div id="artArtist"></div>
+      </div>
+
+      <!-- ไอคอนล่าง -->
+      <div class="mini-gallery">
+        <a href="drawing.html"><img src="drawingbb.webp" alt="Drawing"></a>
+        <a href="3D.html"><img src="3dbb.webp" alt="3D Model"></a>
+        <a href="photo.html"><img src="photobb.webp" alt="Photo"></a>
+        <a href="graphic.html"><img src="graphicbb.webp" alt="Graphic"></a>
+      </div>
+
+    </div>
+  </div>
+  <footer class="footer">
+  <div class="footer-content">
+    <p>© 2025 Cutie Verse </p>
+  </div>
+   </footer>
+  
+  <script>
+  const params = new URLSearchParams(window.location.search);
+
+  // Set values
+  document.getElementById('artName').textContent   = (params.get('name') || '-');
+  document.getElementById('artPrice').textContent  = (params.get('price') || '-');
+  document.getElementById('artArtist').textContent = (params.get('artist') || '-');
+  if (params.get('img')) document.getElementById('artImage').src = params.get('img');
+
+  // ⭐ Fix breadcrumb so Artwork keeps parameters
+  const crumb = document.getElementById("crumb-art");
+  if (crumb && window.location.search.length > 0) {
+      crumb.href = "art-detailphoto.html" + window.location.search;
+  }
+</script>
+
+</body>
+</html>

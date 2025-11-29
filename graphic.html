@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Cutie Verse</title>
+  <link rel="icon" type="image/webp" href="logowebsticker.webp" />
+ <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Graphic</title>
+
+  <style>
+/* Navbar: palette colors top (opacity 1) -> bottom (opacity 0) over black */
+   .navbar {
+  z-index: 1000;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  background: linear-gradient(
+    90deg,
+    rgba(156,210,254) 0%,
+    rgba(190, 197, 249) 25%,   /* ฟ้าเข้มบนสุด */
+    rgb(248, 191, 246) 50%,
+    rgba(255, 248, 188) 75%,   /* ฟ้าเข้มบนสุด */
+    rgb(181, 252, 246) 100%/* เขียวมิ้นต์จาง */
+    
+  );
+  box-shadow: 0 3px 5px #b0a5af;
+  padding: 0;
+}
+.navbar .container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* logo ซ้าย, menu ขวา */
+}
+
+
+/* Utility class: apply palette background to sections */
+.bg-palette {
+  background:
+    radial-gradient(420px 260px at 10% 20%, rgba(156,210,254,0.14), transparent 18%),
+    radial-gradient(360px 220px at 90% 80%, rgba(190,197,249,0.10), transparent 14%),
+    linear-gradient(180deg, rgba(255,255,255,0.6), rgba(255,255,255,0.25));
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(2,6,23,0.06);
+}
+
+.navbar-brand img {
+  display: block;
+  width: auto;
+  max-height: 40px;      /* mobile */
+  height: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 6px 18px rgba(2,6,23,0.06));
+}
+/* Medium and up 
+@media (min-width: 768px) {
+  .navbar-brand img { max-height: 30px; }
+}*/
+
+/* Large and up 
+@media (min-width: 1200px) {
+  .navbar-brand img { max-height: 40px; }
+}*/
+
+
+/* Optional: adjust brand font-size if using text */
+.navbar-brand .brand-text,
+.navbar-brand.logo-text {
+  font-size: 1.25rem;
+}
+
+/* Nav links */
+.navbar .nav-link{
+  font-size: 25px;
+  font-weight:600;
+  color: #000;
+  transition: color .22s ease, background .22s ease;
+  background: transparent;
+  border-radius: 8px;
+  padding: .35rem .35rem;
+  padding-top: 0.6rem;
+  margin: 0;
+}
+.navbar .nav-link:hover,
+.navbar .nav-link:focus{
+  color: #f8bff6;
+  background: linear-gradient(90deg, rgba(156,210,254,0.18), rgba(181,252,246,0.08));
+  box-shadow: 0 8px 22px rgba(6,35,58,0.06);
+  transform: translateY(-2px);
+}
+
+/* Make active / current link stand out */
+.navbar .nav-link.active{
+  color: #fff;
+  background: #58616a;
+  border-radius: 12px;
+  padding: .35rem 0;
+  box-shadow: 0 14px 36px rgba(6,35,58,0.10);
+  transform: translateY(-10px);
+  transition: transform .45s cubic-bezier(.22,.9,.35,1), opacity .35s ease;
+}
+
+/* Toggler button (visible on light bg) */
+.navbar .navbar-toggler {
+  border: 1px solid rgba(6,35,58,0.06);
+  background: linear-gradient(180deg, rgba(255,255,255,0.85), rgba(255,255,255,0.7));
+  transition: background .18s ease, transform .12s ease;
+}
+.navbar .navbar-toggler:active,
+.navbar .navbar-toggler:focus {
+  transform: scale(.98);
+}
+
+/* Toggler icon color */
+.navbar-light .navbar-toggler-icon{
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='%23222' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+}
+
+/* Remove default caret */
+.dropdown-toggle::after{ display:none !important; }
+
+/* Cards / content */
+main .card{
+  border:0;
+  border-radius:12px;
+  overflow:hidden;
+  box-shadow: 0 10px 30px var(--shadow);
+}
+.card .card-body { background: linear-gradient(180deg, rgba(255,255,255,0.85), rgba(255,255,255,0.95)); }
+
+/* ---------- Dropdown slide & color styling ---------- */
+/* Dropdown color theme (replace previous dropdown rules) */
+.dropdown { position: relative; }
+
+.dropdown-menu{
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 1200;
+  display: block;
+  min-width: 200px;
+  border-radius: 12px;
+  /* new background using palette */
+  background: #333 ;
+  text-shadow: 0px 0px 3px #000000;
+  border: 1px solid rgba(6,35,58,0.06);
+  box-shadow: 0 10px 15px rgba(255, 255, 255, 0.1);
+  padding: .35rem 0;
+  transform: translateY(-10px);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: transform .45s cubic-bezier(.22,.9,.35,1), opacity 0.35s ease, visibility .01s linear;
+  will-change: transform, opacity;
+  color: var(--text);
+}
+
+/* visible state */
+.dropdown.show > .dropdown-menu,
+.dropdown-menu.show {
+  transform: translateY(0);
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+/* dropdown items color */
+.dropdown-item{
+  color: #fff;
+  padding: .5rem 1rem;
+  transition: background .18s ease, color .12s ease;
+}
+
+/* item hover/focus - brighter gradient accent */
+.dropdown-item:hover,
+.dropdown-item:focus{
+  background: rgb(245, 200, 245);
+  color: #000;
+  transform: translateX(2px);
+}
+
+/* closing state */
+.dropdown.closing > .dropdown-menu,
+.dropdown-menu.closing{
+  transform: translateY(-14px);
+  opacity: 0;
+  visibility: visible;
+  pointer-events: none;
+}
+
+/* keep hover behavior on pointer devices */
+@media (hover: hover) and (pointer: fine){
+  .dropdown:hover > .dropdown-menu,
+  .dropdown:focus-within > .dropdown-menu{
+    transform: translateY(0);
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+  }
+}
+
+/* Accessibility: keyboard focus shows menu */
+.dropdown:focus-within > .dropdown-menu{
+  transform: translateY(0);
+  opacity:1;
+  visibility:visible;
+  pointer-events:auto;
+}
+
+/* Small polish for page */
+/* Responsive spacing */
+@media (min-width:768px){
+  .navbar .nav-item + .nav-item{ margin-left:1.25rem; }
+  .dropdown-menu{ min-width:220px; }
+}
+
+/* Footer / minor accents (use palette) */
+a.logo-accent{ color: var(--c1); font-weight:700; }
+.badge-palette{
+  background: linear-gradient(90deg,var(--c1),var(--c2));
+  color:#082032;
+  border-radius:999px;
+  padding:.25rem .6rem;
+}
+.navbar-brand {
+  display: inline-flex;
+  align-items: center;
+  transition: transform 0.18s ease, filter 0.18s ease, box-shadow 0.18s ease;
+}
+
+.navbar-brand:hover,
+.navbar-brand:focus {
+  transform: scale(1.08); /* ขยายเล็กน้อย */
+  filter: drop-shadow(0 8px 20px rgba(2,6,23,0.1)); /* เงาเบา */
+  cursor: pointer;
+}
+  @media (max-width: 767.98px) {
+    /* Make sure submenus are hidden and have no pointer events */
+    .nav-item.dropdown > .dropdown-menu {
+      display: none !important;
+      visibility: hidden !important;
+      opacity: 0 !important;
+      pointer-events: none !important;
+      height: 0 !important;
+      margin: 0 !important;
+      padding: 0 !important;
+    }
+  }
+
+    @font-face {
+    font-family: 'Krifon';
+    src: url('Krifon%20Regular.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+  }
+    body {
+      font-family: 'League spartan', sans-serif;
+      background: #191a1c;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* 🔹 ส่วน Header */
+    header {
+      position: relative;
+      width: 100%;
+      height: 300px;
+      background-image: url('graphicc.webp');
+      background-size: cover;
+      background-position: center 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      overflow: hidden;
+    }
+
+    /* ไล่สี gradient ทับรูป */
+    header::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(to top, rgba(25, 26, 28, 1), rgba(25, 26, 28, 0.2));
+      z-index: 1;
+    }
+
+    /* ข้อความบน header */
+    header h1 {
+      font-family: 'Krifon', sans-serif;
+      position: absolute;
+      z-index: 2;
+      font-size: 6rem;
+      letter-spacing: 4px;
+      text-shadow: 0 3px 10px rgba(0, 0, 0, 0.5);
+      left: 40px;
+      top: 200px;
+    animation: nameFadeUp 1s ease forwards;
+    animation-delay: 0.3s;
+    }
+    @keyframes nameFadeUp {
+    0% {
+        opacity: 0;
+        transform: translate(-20%, 10px);  /* ขยับลงเล็กน้อย */
+    }
+    100% {
+        opacity: 1;
+        transform: translate(0%, 0);     /* ขยับขึ้นตามธรรมชาติ */
+    }
+    }
+
+    .subtitle {
+      font-size: 1.7rem;
+      color: rgb(211, 211, 211);
+      letter-spacing: 1px;
+      font-weight: 300;
+      padding-top: 50px;
+      padding-left: 50px;
+      padding-right: 50px;
+
+    }
+
+    .animated-title {
+      font-family: 'Prompt', sans-serif;
+      font-size: 3rem;
+      color: white;
+      letter-spacing: 2px;
+      opacity: 0;
+      transform: translateY(30px);
+      /* เริ่มต่ำลงเล็กน้อย */
+      animation: slideUpAll 0.8s ease-out forwards;
+    }
+
+    /* subtitle ขึ้นตามทีหลังได้ */
+    .subtitle {
+      opacity: 0;
+      transform: translateY(20px);
+      animation: slideUpAll 0.8s ease-out 0.4s forwards;
+      /* ดีเลย์นิดนึง */
+    }
+
+    @keyframes slideUpAll {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* 🔹 แกลเลอรี่ */
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+      padding: 40px;
+      padding-top: 50px;
+      transition: all 0.3s ease;
+    }
+
+    .gallery img {
+      width: 100%;
+      border-radius: 15px;
+      object-fit: cover;
+      transition: all 0.4s ease;
+      cursor: pointer;
+    }
+
+    /* เมื่อ hover บน gallery ทั้งหมด */
+    .gallery:hover img {
+      filter: blur(3px) brightness(0.8);
+      transform: scale(1);
+    }
+
+    /* เฉพาะรูปที่ hover อยู่ */
+    .gallery img:hover {
+      filter: blur(0) brightness(1);
+      transform: scale(1.1);
+      z-index: 10;
+    }
+
+    /* Responsive */
+    @media (max-width: 1024px) {
+      .gallery {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .subtitle {
+        font-size: 1.5rem;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .gallery {
+        grid-template-columns: 1fr;
+      }
+
+      header h1 {
+        font-size: 4.5rem;
+        text-align: center;
+      }
+      .subtitle {
+        font-size: 1.2rem;
+      }
+    }
+        .breadcrumbs {
+    font-size: 1.1rem;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    color: #ffffff;
+    padding: 4%;
+    animation: nameFadeUp 1s ease forwards;
+    animation-delay: 0.3s;
+    }
+    @keyframes nameFadeUp {
+    0% {
+        opacity: 0;
+        transform: translate(-20%, 10px);  /* ขยับลงเล็กน้อย */
+    }
+    100% {
+        opacity: 1;
+        transform: translate(0%, 0);     /* ขยับขึ้นตามธรรมชาติ */
+    }
+    }
+
+    .breadcrumbs a {
+    color: #ffffff;
+    text-decoration: none;
+    }
+
+    .breadcrumbs span {
+    opacity: 0.6;
+    }
+    .footer {
+    background: linear-gradient(to right, #b4f0ff, #e0c3fc, #fbc2eb);
+    color: #000;
+    padding: 20px 0;
+    text-align: center;
+    font-weight: 600;
+    width: 100%;
+    margin-top: 0;
+    }
+  </style>
+  <!-- Bootstrap JS (bundle includes Popper) -->
+   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+ 
+  <!-- Custom dropdown/toggler logic (moved to after bootstrap) -->
+  <script>
+  document.addEventListener('DOMContentLoaded', function () {
+    var hoverCapable = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+
+    function updateDropdownBehavior() {
+      var isSmallScreen = window.matchMedia('(max-width: 767.98px)').matches;
+      document.querySelectorAll('.dropdown-toggle').forEach(function (toggle) {
+        if (isSmallScreen) {
+          toggle.removeAttribute('data-bs-toggle'); // mobile: no dropdown submenu
+          toggle.setAttribute('aria-expanded', 'false');
+        } else {
+          if (hoverCapable) {
+            toggle.removeAttribute('data-bs-toggle');
+          } else {
+            if (!toggle.hasAttribute('data-bs-toggle')) {
+              toggle.setAttribute('data-bs-toggle', 'dropdown');
+            }
+          }
+        }
+      });
+
+      // Close open dropdowns/collapses when switching to small screen
+      if (isSmallScreen && window.bootstrap) {
+        document.querySelectorAll('.dropdown.show').forEach(function(drop){
+          var toggle = drop.querySelector('.dropdown-toggle');
+          if (toggle) {
+            var dd = bootstrap.Dropdown.getInstance(toggle);
+            if (dd) dd.hide();
+          }
+        });
+        document.querySelectorAll('.collapse.show').forEach(function(c){
+          var bs = bootstrap.Collapse.getInstance(c);
+          if (bs) bs.hide();
+        });
+      }
+    }
+
+    updateDropdownBehavior();
+    var resizeTimer;
+    window.addEventListener('resize', function () {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(updateDropdownBehavior, 120);
+    });
+    window.addEventListener('orientationchange', updateDropdownBehavior);
+
+    // Debug helper: log toggler clicks (ลบออกหลังทดสอบ)
+    document.querySelectorAll('.navbar-toggler').forEach(btn => btn.addEventListener('click', () => console.debug('toggler clicked')));
+  });
+  </script>
+</head>
+
+<body>
+  <nav class="navbar navbar-expand-md navbar-light navbar-gradient">
+    <div class="container">
+      <!-- Left: logo -->
+      <a class="navbar-brand fw-bold mb-0" href="index.html"><img src="logowebsticker.webp" alt="logo"></a>
+
+      <!-- Toggler for small screens -->
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav"
+        aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <!-- Right: menu -->
+      <div class="collapse navbar-collapse" id="mainNav">
+        <ul class="navbar-nav ms-auto align-items-center">
+          <li class="nav-item">
+            <a class="nav-link" href="index.html">home</a>
+          </li>
+
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="work.html" id="workDropdown" role="button"
+              data-bs-toggle="dropdown" aria-expanded="false">
+              work
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="workDropdown">
+              <li><a class="dropdown-item" href="drawing.html">Drawing</a></li>
+              <li><a class="dropdown-item" href="graphic.html">Graphic</a></li>
+              <li><a class="dropdown-item" href="photo.html">Photo</a></li>
+              <li><a class="dropdown-item" href="3D.html">3D Model</a></li>
+            </ul>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="team.html">team</a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="contact.html">contact</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <header>
+    <h1>Graphic</h1>
+  </header>
+  <p class="subtitle">Bright and cheerful graphic designs full of personality. Mixing bold colors, cute elements, and thoughtful layouts to create visuals that make people smile.</p>
+          <div class="breadcrumbs">
+          <a href="index.html">Home</a>
+          <span>/</span>
+          <a href="work.html">Work</a>
+          <span>/</span>
+          <a href="graphic.html">Graphic</a>
+          </div>
+  <div class="gallery">
+  <a href="art-detailgraphic.html?name=Four Paw Cafe&price=24$&artist=Dakanda%20Thonganan&img=gra1.webp">
+    <img src="gra1.webp" alt="work 1">
+  </a>
+
+  <a href="art-detailgraphic.html?name=Kitty and Squishy Shop&price=25$&artist=Jiratchaya%20Laopinisatid&img=gra2.webp">
+    <img src="gra2.webp" alt="work 2">
+  </a>
+
+  <a href="art-detailgraphic.html?name=Meaow Bloom&price=20$&artist=Sirirat%20Thumsatidkun&img=gra3.webp">
+    <img src="gra3.webp" alt="work 3">
+  </a>
+
+  <a href="art-detailgraphic.html?name=Happiness Blooms&price=17$&artist=Chonchanok%20Chomchin&img=gra4.webp">
+    <img src="gra4.webp" alt="work 4">
+  </a>
+
+  <a href="art-detailgraphic.html?name=BPK Cosplay Meeting&price=20$&artist=Jiratchaya%20Laopinisatid&img=gra5.webp">
+    <img src="gra5.webp" alt="work 5">
+  </a>
+
+  <a href="art-detailgraphic.html?name=CMM Back To School&price=27$&artist=Jiratchaya%20Laopinisatid&img=gra6.webp">
+    <img src="gra6.webp" alt="work 6">
+  </a>
+
+  <a href="art-detailgraphic.html?name=Congratulations CMM23&price=24$&artist=Jiratchaya%20Laopinisatid&img=gra7.webp">
+    <img src="gra7.webp" alt="work 7">
+  </a>
+
+  <a href="art-detailgraphic.html?name=Grow Love&price=18$&artist=Sudarat%20Ardnoi&img=gra8.webp">
+    <img src="gra8.webp" alt="work 8">
+  </a>
+
+  <a href="art-detailgraphic.html?name=Nendoroid Saiki K.&price=20$&artist=Jiratchaya%20Laopinisatid&img=gra9.webp">
+    <img src="gra9.webp" alt="work 9">
+  </a>
+
+  <a href="art-detailgraphic.html?name=Wasan Boriphat&price=17$&artist=Jiratchaya%20Laopinisatid&img=gra10.webp">
+    <img src="gra10.webp" alt="work 10">
+  </a>
+</div>
+<footer class="footer">
+  <div class="footer-content">
+    <p>© 2025 Cutie Verse </p>
+    <div class="social-links">
+   <a href="https://www.facebook.com/profile.php?id=61584217357667"><i class="fab fa-facebook"></i></a>
+   <a href="https://www.instagram.com/cutieverse_website?igsh=Mmo5emc0ZHJ0MzZ2"><i class="fab fa-instagram"></i></a>
+   <a href="https://www.tiktok.com/@cutieverse_website?_r=1&_t=ZS-91koZPf99CW"><i class="fab fa-tiktok"></i></a>
+  </div>
+  </div>
+</footer>
+
+</body>
+
+ 
+</html>
