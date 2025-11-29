@@ -269,25 +269,29 @@ a.logo-accent{ color: var(--c1); font-weight:700; }
       padding: 0 !important;
     }
   }
-
+.imgteam-box {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
 .text-box {
   color: rgb(255, 255, 255);                /* สีตัวอักษร */
   text-align: center;          /* จัดข้อความให้อยู่กลาง */
-  font-size: 500%; 
-  padding: 30px;               /* เว้นระยะรอบข้อความ */
   border-radius: 40px;         /* ทำมุมให้โค้งมน */
-  width: 60%;       /* กำหนดความกว้าง (เช่น 80% ของหน้าจอ) */
-  margin: 60px auto;           /* จัดให้อยู่กลางแนวนอนและห่างจากด้านบนล่าง */
-  margin-top: 100px;
   bottom: 0%;
   position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
   text-shadow: #000 2px 2px 4px;
   font-weight: 600;
 }
+@media (max-width: 767.98px) {
+  .text-box {
+
+  }
+}
 .imgteam-box p {
     font-family: 'Krifon', sans-serif;
+    margin: 0;
+    padding: 0;
 }
 
 .imgteam-box img {
@@ -307,7 +311,7 @@ a.logo-accent{ color: var(--c1); font-weight:700; }
 }
 
 .imgteam{
-    height: 100vh;
+    height: 100%;
     width: 100%;
 }
 
@@ -477,6 +481,8 @@ a.logo-accent{ color: var(--c1); font-weight:700; }
   margin: 0 auto;
   box-sizing: border-box;
   grid-auto-flow: row;
+  position: relative;
+  top: 5%;
 }
 
 /* desktop: 3 columns */
@@ -503,10 +509,9 @@ a.logo-accent{ color: var(--c1); font-weight:700; }
 .text-box {
   position: absolute !important;
   left: 50% !important;
-  bottom: 0.4rem !important;
+  bottom: 0 !important;
   transform: translateX(-50%) !important;
   width: clamp(240px, 70%, 720px) !important;
-  padding: clamp(6px, 1.2vw, 14px) !important;
   /* ขนาดฟอนต์ใหญ่ขึ้นแบบ responsive */
   font-size: clamp(22px, 6vw, 64px) !important;
   line-height: 1.05 !important;
@@ -515,13 +520,16 @@ a.logo-accent{ color: var(--c1); font-weight:700; }
   margin: 0 !important;
 
 }
-
+@media (max-width: 768px) {
+  .imgteam .text-box {
+    bottom: -20% !important;
+  }
+}
 /* Mobile: ขนาดไหลลื่น ลดลงอย่างต่อเนื่อง (ไม่กระโดด) */
 @media (max-width: 767.98px) {
   .imgteam .text-box {
-    bottom: 0.35rem !important;
+    bottom: 0 !important;
     width: 92% !important;
-    padding: 8px 10px !important;
     font-size: clamp(16px, 6.5vw, 32px) !important;
     transform: translateX(-50%) !important;
   }
@@ -595,9 +603,9 @@ footer.footer {
         <section class="imgteam">
             <div class="imgteam-box">
               <img src="MY TEAM.webp">
-              <div class="text-box">
-                <p>MY TEAM</p>
-              </div>
+              
+                <p class="text-box">OURS TEAM</p>
+              
             </div>
         </section>
 
