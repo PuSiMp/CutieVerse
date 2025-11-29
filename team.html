@@ -1,0 +1,693 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Cutie Verse</title>
+  <link rel="icon" type="image/webp" href="logowebsticker.webp" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <!-- Google Fonts: League Spartan -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@100..900&display=swap" rel="stylesheet">
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Custom styles -->
+ <style>:root{
+  --c1: #9cd2fe; /* light blue */
+  --c2: #bec5f9; /* lavender */
+  --c3: #f8bff6; /* pink */
+  --c4: #fffcf3; /* cream (page bg) */
+  --c5: #b5fcf6; /* mint */
+  --text: #111217;
+  --muted: #58616a;
+  --shadow: rgba(17,18,23,0.08);
+}
+
+/* Replace solid background with layered gradient using the palette */
+html, body {
+  height: 100%;
+  margin: 0;
+  background-color: #191a1c; /* พื้นดำเต็มจอ */
+  font-family: 'League Spartan', sans-serif;
+}
+
+  .navbar {
+  z-index: 1000;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  background: linear-gradient(
+    90deg,
+    rgba(156,210,254) 0%,
+    rgba(190, 197, 249) 25%,   /* ฟ้าเข้มบนสุด */
+    rgb(248, 191, 246) 50%,
+    rgba(255, 248, 188) 75%,   /* ฟ้าเข้มบนสุด */
+    rgb(181, 252, 246) 100%/* เขียวมิ้นต์จาง */
+    
+  );
+  box-shadow: 0 3px 5px #b0a5af;
+  padding: 0;
+}
+.navbar .container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* logo ซ้าย, menu ขวา */
+}
+
+
+/* Utility class: apply palette background to sections */
+.bg-palette {
+  background:
+    radial-gradient(420px 260px at 10% 20%, rgba(156,210,254,0.14), transparent 18%),
+    radial-gradient(360px 220px at 90% 80%, rgba(190,197,249,0.10), transparent 14%),
+    linear-gradient(180deg, rgba(255,255,255,0.6), rgba(255,255,255,0.25));
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(2,6,23,0.06);
+}
+
+.navbar-brand img {
+  display: block;
+  width: auto;
+  max-height: 40px;      /* mobile */
+  height: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 6px 18px rgba(2,6,23,0.06));
+}
+/* Medium and up 
+@media (min-width: 768px) {
+  .navbar-brand img { max-height: 30px; }
+}*/
+
+/* Large and up 
+@media (min-width: 1200px) {
+  .navbar-brand img { max-height: 40px; }
+}*/
+
+
+/* Optional: adjust brand font-size if using text */
+.navbar-brand .brand-text,
+.navbar-brand.logo-text {
+  font-size: 1.25rem;
+}
+
+/* Nav links */
+.navbar .nav-link{
+  font-size: 25px;
+  font-weight:600;
+  color: #000;
+  transition: color .22s ease, background .22s ease;
+  background: transparent;
+  border-radius: 8px;
+  padding: .35rem .35rem;
+  padding-top: 0.6rem;
+  margin: 0;
+}
+.navbar .nav-link:hover,
+.navbar .nav-link:focus{
+  color: #f8bff6;
+  background: linear-gradient(90deg, rgba(156,210,254,0.18), rgba(181,252,246,0.08));
+  box-shadow: 0 8px 22px rgba(6,35,58,0.06);
+  transform: translateY(-2px);
+}
+
+/* Make active / current link stand out */
+.navbar .nav-link.active{
+  color: #fff;
+  background: #58616a;
+  border-radius: 12px;
+  padding: .35rem 0;
+  box-shadow: 0 14px 36px rgba(6,35,58,0.10);
+  transform: translateY(-10px);
+  transition: transform .45s cubic-bezier(.22,.9,.35,1), opacity .35s ease;
+}
+
+/* Toggler button (visible on light bg) */
+.navbar .navbar-toggler {
+  border: 1px solid rgba(6,35,58,0.06);
+  background: linear-gradient(180deg, rgba(255,255,255,0.85), rgba(255,255,255,0.7));
+  transition: background .18s ease, transform .12s ease;
+}
+.navbar .navbar-toggler:active,
+.navbar .navbar-toggler:focus {
+  transform: scale(.98);
+}
+
+/* Toggler icon color */
+.navbar-light .navbar-toggler-icon{
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='%23222' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+}
+
+/* Remove default caret */
+.dropdown-toggle::after{ display:none !important; }
+
+/* Cards / content */
+main .card{
+  border:0;
+  border-radius:12px;
+  overflow:hidden;
+  box-shadow: 0 10px 30px var(--shadow);
+}
+.card .card-body { background: linear-gradient(180deg, rgba(255,255,255,0.85), rgba(255,255,255,0.95)); }
+
+/* ---------- Dropdown slide & color styling ---------- */
+/* Dropdown color theme (replace previous dropdown rules) */
+.dropdown { position: relative; }
+
+.dropdown-menu{
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 1200;
+  display: block;
+  min-width: 200px;
+  border-radius: 12px;
+  /* new background using palette */
+  background: #333 ;
+  text-shadow: 0px 0px 3px #000000;
+  border: 1px solid rgba(6,35,58,0.06);
+  box-shadow: 0 10px 15px rgba(255, 255, 255, 0.1);
+  padding: .35rem 0;
+  transform: translateY(-10px);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: transform .45s cubic-bezier(.22,.9,.35,1), opacity 0.35s ease, visibility .01s linear;
+  will-change: transform, opacity;
+  color: var(--text);
+}
+
+/* visible state */
+.dropdown.show > .dropdown-menu,
+.dropdown-menu.show {
+  transform: translateY(0);
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+/* dropdown items color */
+.dropdown-item{
+  color: #fff;
+  padding: .5rem 1rem;
+  transition: background .18s ease, color .12s ease;
+}
+
+/* item hover/focus - brighter gradient accent */
+.dropdown-item:hover,
+.dropdown-item:focus{
+  background: rgb(245, 200, 245);
+  color: #000;
+  transform: translateX(2px);
+}
+
+/* closing state */
+.dropdown.closing > .dropdown-menu,
+.dropdown-menu.closing{
+  transform: translateY(-14px);
+  opacity: 0;
+  visibility: visible;
+  pointer-events: none;
+}
+
+/* keep hover behavior on pointer devices */
+@media (hover: hover) and (pointer: fine){
+  .dropdown:hover > .dropdown-menu,
+  .dropdown:focus-within > .dropdown-menu{
+    transform: translateY(0);
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+  }
+}
+
+/* Accessibility: keyboard focus shows menu */
+.dropdown:focus-within > .dropdown-menu{
+  transform: translateY(0);
+  opacity:1;
+  visibility:visible;
+  pointer-events:auto;
+}
+
+/* Small polish for page */
+/* Responsive spacing */
+@media (min-width:768px){
+  .navbar .nav-item + .nav-item{ margin-left:1.25rem; }
+  .dropdown-menu{ min-width:220px; }
+}
+
+/* Footer / minor accents (use palette) */
+a.logo-accent{ color: var(--c1); font-weight:700; }
+.badge-palette{
+  background: linear-gradient(90deg,var(--c1),var(--c2));
+  color:#082032;
+  border-radius:999px;
+  padding:.25rem .6rem;
+}
+.navbar-brand {
+  display: inline-flex;
+  align-items: center;
+  transition: transform 0.18s ease, filter 0.18s ease, box-shadow 0.18s ease;
+}
+
+.navbar-brand:hover,
+.navbar-brand:focus {
+  transform: scale(1.08); /* ขยายเล็กน้อย */
+  filter: drop-shadow(0 8px 20px rgba(2,6,23,0.1)); /* เงาเบา */
+  cursor: pointer;
+}
+  @media (max-width: 767.98px) {
+    /* Make sure submenus are hidden and have no pointer events */
+    .nav-item.dropdown > .dropdown-menu {
+      display: none !important;
+      visibility: hidden !important;
+      opacity: 0 !important;
+      pointer-events: none !important;
+      height: 0 !important;
+      margin: 0 !important;
+      padding: 0 !important;
+    }
+  }
+
+.text-box {
+  color: rgb(255, 255, 255);                /* สีตัวอักษร */
+  text-align: center;          /* จัดข้อความให้อยู่กลาง */
+  font-size: 500%; 
+  padding: 30px;               /* เว้นระยะรอบข้อความ */
+  border-radius: 40px;         /* ทำมุมให้โค้งมน */
+  width: 60%;       /* กำหนดความกว้าง (เช่น 80% ของหน้าจอ) */
+  margin: 60px auto;           /* จัดให้อยู่กลางแนวนอนและห่างจากด้านบนล่าง */
+  margin-top: 100px;
+  bottom: 0%;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  text-shadow: #000 2px 2px 4px;
+  font-weight: 600;
+}
+.imgteam-box p {
+    font-family: 'Krifon', sans-serif;
+}
+
+.imgteam-box img {
+    width: 100%;
+    display: block;
+    top: 56px;
+    position: relative;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+    -webkit-mask-image: linear-gradient(to bottom,
+    rgba(0, 0, 0, 1) 70%, /* 70% แรกทึบเต็มที่ (สีดำ = ทึบ) */
+    rgba(0, 0, 0, 0) 100%  /* 30% สุดท้ายไล่ระดับไปจนโปร่งใส (สีขาว = ทึบ, สีดำ = โปร่งใสในกรณี mask-image) */
+  );
+  mask-image: linear-gradient(to bottom,
+    rgba(0, 0, 0, 1) 70%,
+    rgba(0, 0, 0, 0) 100%
+  );
+}
+
+.imgteam{
+    height: 100vh;
+    width: 100%;
+}
+
+    @font-face {
+    font-family: 'Krifon';
+    src: url('Krifon%20Regular.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+    }
+    
+.member {
+  grid-template-columns: repeat(3, minmax(0, 1fr)); /* always 3 cols on desktop */
+  gap: clamp(20px, 4vw, 60px);
+  padding: clamp(48px, 6vw, 120px) 16px 100px;
+  max-width: 1280px;
+  margin: 0 auto;
+  box-sizing: border-box;
+  justify-items: center; /* center items in their grid cells */
+}
+
+.member-box img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    border-radius: 20px;
+    object-fit: cover;
+    box-shadow: 0 15px 40px rgba(99, 99, 99, 0.41);
+    transition: transform 0.3s , box-shadow 0.3s ;
+}
+
+.member-box img:hover {
+    transform: scale(1.05);
+    box-shadow: 0 25px 50px rgba(99, 99, 99, 0.45);
+
+}
+
+.member .member-box {
+   position: relative;
+   overflow: hidden;
+   border-radius: 20px;
+   width: 100%;
+   aspect-ratio: 1 / 1;   /* force square images */
+   max-width: 420px; 
+}
+
+.member .member-box::after {
+   content: "";
+   position: absolute;
+   top: 0;
+   left: 0;
+   width: 100%;
+   height: 100%;
+   background: linear-gradient(180deg, rgba(0, 0, 0, 0) 60%, rgba(0, 0, 0, 0.7) 100%);
+   opacity: 0;
+   transition: opacity 0.3s;
+   z-index: 1;
+}
+
+.member .member-box:hover::after {
+   opacity: 1;
+}
+.member .member-box::before {
+    content: attr(data-name);
+    position: absolute;
+    left: 50%;
+    bottom: 15px;
+    transform: translateX(-50%);
+    color: white;
+    font-size: 1.3rem;
+    font-weight: 600;
+    opacity: 0;
+    z-index: 2;
+    transition: opacity 0.3s ease;
+}
+
+.member .member-box:hover::before {
+    opacity: 1;
+}
+
+.footer {
+  background: linear-gradient(to right, #b4f0ff, #e0c3fc, #fbc2eb); /* ไล่สีพาสเทล */
+  color: #000;
+  padding: 20px 0;
+  text-align: center;
+  font-weight: 600;
+  position: relative;
+  bottom: 0;
+  width: 100%;
+  
+}
+
+.footer-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.social-links a {
+  color: #000;
+  margin: 0 8px;
+  font-size: 1.2rem;
+  transition: transform 0.3s, color 0.3s;
+}
+
+.social-links a:hover {
+  transform: scale(1.2);
+  color: #ff66c4;
+}
+.footer {
+  background: linear-gradient(to right, #b4f0ff, #e0c3fc, #fbc2eb); /* ไล่สีพาสเทล */
+  color: #000;
+  padding: 20px 0;
+  text-align: center;
+  font-weight: 600;
+  position: relative;
+  bottom: 0;
+  width: 100%;
+  
+}
+
+.footer-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.social-links a {
+  color: #000;
+  margin: 0 8px;
+  font-size: 1.2rem;
+  transition: transform 0.3s, color 0.3s;
+}
+
+.social-links a:hover {
+  transform: scale(1.2);
+  color: #ff66c4;
+}
+
+/* ---------- Layout safety: prevent horizontal overflow & keep content fitting viewport ---------- */
+
+/* Hero: remove forced full-height so image won't push beyond viewport */
+.imgteam {
+  position: relative;
+  width: 100%;
+  height: auto;          /* allow image to define height */
+  max-height: 60vh;     /* limit hero height so it doesn't push page beyond viewport */
+  overflow: hidden;
+}
+
+/* wrapper fills width; image flows naturally */
+.imgteam-box {
+  position: relative;
+  width: 100%;
+  height: auto;
+}
+
+.imgteam {
+  height: auto !important;         /* don't force full viewport height */
+  max-height: none !important;     /* remove any max-height that cropped image */
+  overflow: visible !important;    /* allow image to expand vertically if needed */
+}
+.member {
+  display: grid !important;
+  gap: clamp(18px, 3.5vw, 48px) !important;
+  margin: 0 auto;
+  box-sizing: border-box;
+  grid-auto-flow: row;
+}
+
+/* desktop: 3 columns */
+@media (min-width: 992px) {
+  .member {
+    grid-template-columns: repeat(3, 1fr) !important;
+    max-width: 1280px;
+    justify-items: center;
+  }
+  .member .member-box {
+    width: 100%;
+    max-width: 360px; /* size each cell so 3 columns fit nicely */
+    aspect-ratio: 1/1;
+  }
+}
+
+/* mobile: single centered column */
+
+
+/* ensure no element extends viewport width */
+* { max-width: 100vw; box-sizing: border-box; }
+
+/* ปรับตำแหน่ง .text-box เท่านั้น - วางท้าย <style> เพื่อ override */
+.text-box {
+  position: absolute !important;
+  left: 50% !important;
+  bottom: 0.4rem !important;
+  transform: translateX(-50%) !important;
+  width: clamp(240px, 70%, 720px) !important;
+  padding: clamp(6px, 1.2vw, 14px) !important;
+  /* ขนาดฟอนต์ใหญ่ขึ้นแบบ responsive */
+  font-size: clamp(22px, 6vw, 64px) !important;
+  line-height: 1.05 !important;
+  z-index: 12 !important;
+  pointer-events: none !important;
+  margin: 0 !important;
+
+}
+
+/* Mobile: ขนาดไหลลื่น ลดลงอย่างต่อเนื่อง (ไม่กระโดด) */
+@media (max-width: 767.98px) {
+  .imgteam .text-box {
+    bottom: 0.35rem !important;
+    width: 92% !important;
+    padding: 8px 10px !important;
+    font-size: clamp(16px, 6.5vw, 32px) !important;
+    transform: translateX(-50%) !important;
+  }
+}
+
+/* Layout: make footer stick to bottom when page is short */
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+/* main content grows to fill available space and push footer down */
+.page-content {
+  flex: 1 0 auto;
+}
+footer.footer {
+  flex-shrink: 0;
+  width: 100%;
+}
+  </style>
+
+</head>
+<body>
+
+  <!-- เอา bg-white ออก หรือใช้ navbar-gradient -->
+  <nav class="navbar navbar-expand-md navbar-light navbar-gradient">
+    <div class="container">
+      <!-- Left: logo -->
+      <a class="navbar-brand fw-bold mb-0" href="index.html"><img src="logowebsticker.webp" alt="logo"></a>
+
+      <!-- Toggler for small screens -->
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav"
+              aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <!-- Right: menu -->
+      <div class="collapse navbar-collapse" id="mainNav">
+        <ul class="navbar-nav ms-auto align-items-center">
+          <li class="nav-item">
+            <a class="nav-link" href="index.html">home</a>
+          </li>
+
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="work.html" id="workDropdown" role="button"
+               data-bs-toggle="dropdown" aria-expanded="false">
+              work
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="workDropdown">
+              <li><a class="dropdown-item" href="drawing.html">Drawing</a></li>
+              <li><a class="dropdown-item" href="graphic.html">Graphic</a></li>
+              <li><a class="dropdown-item" href="photo.html">Production</a></li>
+              <li><a class="dropdown-item" href="3D.html">3D Model</a></li>
+            </ul>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="team.html">team</a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="contact.html">contact</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <main class="page-content">
+    <!--รูปทีม-->
+        <section class="imgteam">
+            <div class="imgteam-box">
+              <img src="MY TEAM.webp">
+              <div class="text-box">
+                <p>MY TEAM</p>
+              </div>
+            </div>
+        </section>
+
+        <section class="member">
+    <div class="member-box" data-name="Sirirat">
+        <img src="sirirat.webp" alt="Member 1" >
+    </div>
+    <div class="member-box" data-name="Peamika">
+        <img src="peamika.webp" alt="Member 2" >
+    </div>
+    <div class="member-box" data-name="Sudarat">
+        <img src="sudarat.webp" alt="Member 3" >
+    </div>
+    <div class="member-box" data-name="Supachaya">
+        <img src="supachaya.webp" alt="Member 4" >
+    </div>
+    <div class="member-box" data-name="Phubodin">
+        <img src="phubodin.webp" alt="Member 5" >
+    </div>
+    <div class="member-box" data-name="Chonchanok">
+        <img src="chonchanok.webp" alt="Member 6" >
+    </div>
+    <div class="member-box" data-name="Dakanda">
+        <img src="dakanda.webp" alt="Member 7" >
+    </div>
+    <div class="member-box" data-name="Jiratchaya">
+        <img src="jiratchaya.webp" alt="Member 8" >
+    </div>
+    <div class="member-box" data-name="Linrada">
+        <img src="linrada.webp" alt="Member 9" >
+    </div>
+  </section>
+  </main>
+
+  <footer class="footer">
+  <div class="footer-content">
+    <p>© 2025 Cutie Verse </p>
+  </div>
+   </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+ <script>
+  document.addEventListener('DOMContentLoaded', function () {
+    var hoverCapable = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+
+    function updateDropdownBehavior() {
+      var isSmallScreen = window.matchMedia('(max-width: 767.98px)').matches;
+      document.querySelectorAll('.dropdown-toggle').forEach(function (toggle) {
+        if (isSmallScreen) {
+          toggle.removeAttribute('data-bs-toggle'); // mobile: no dropdown submenu
+          toggle.setAttribute('aria-expanded', 'false');
+        } else {
+          if (hoverCapable) {
+            toggle.removeAttribute('data-bs-toggle');
+          } else {
+            if (!toggle.hasAttribute('data-bs-toggle')) {
+              toggle.setAttribute('data-bs-toggle', 'dropdown');
+            }
+          }
+        }
+      });
+
+      // Close open dropdowns/collapses when switching to small screen
+      if (isSmallScreen && window.bootstrap) {
+        document.querySelectorAll('.dropdown.show').forEach(function(drop){
+          var toggle = drop.querySelector('.dropdown-toggle');
+          if (toggle) {
+            var dd = bootstrap.Dropdown.getInstance(toggle);
+            if (dd) dd.hide();
+          }
+        });
+        document.querySelectorAll('.collapse.show').forEach(function(c){
+          var bs = bootstrap.Collapse.getInstance(c);
+          if (bs) bs.hide();
+        });
+      }
+    }
+
+    updateDropdownBehavior();
+    var resizeTimer;
+    window.addEventListener('resize', function () {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(updateDropdownBehavior, 120);
+    });
+    window.addEventListener('orientationchange', updateDropdownBehavior);
+
+    // Debug helper: log toggler clicks (ลบออกหลังทดสอบ)
+    document.querySelectorAll('.navbar-toggler').forEach(btn => btn.addEventListener('click', () => console.debug('toggler clicked')));
+  });
+  </script>
+  </body>
+
+</html>
