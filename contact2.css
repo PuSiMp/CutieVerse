@@ -1,0 +1,477 @@
+:root{
+  --c1: #9cd2fe; /* light blue */
+  --c2: #bec5f9; /* lavender */
+  --c3: #f8bff6; /* pink */
+  --c4: #fffcf3; /* cream (page bg) */
+  --c5: #b5fcf6; /* mint */
+  --text: #111217;
+  --muted: #58616a;
+  --shadow: rgba(17,18,23,0.08);
+}
+
+/* Base styles */
+html, body {
+  height: 100%;
+  margin: 0;
+  background-color: #191a1c;
+  font-family: "League Spartan", sans-serif;
+}
+
+ .navbar {
+  z-index: 1000;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  background: linear-gradient(
+    90deg,
+    rgba(156,210,254) 0%,
+    rgba(190, 197, 249) 25%,   /* ฟ้าเข้มบนสุด */
+    rgb(248, 191, 246) 50%,
+    rgba(255, 248, 188) 75%,   /* ฟ้าเข้มบนสุด */
+    rgb(181, 252, 246) 100%/* เขียวมิ้นต์จาง */
+    
+  );
+  box-shadow: 0 3px 5px #b0a5af;
+  padding: 0;
+}
+.navbar .container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* logo ซ้าย, menu ขวา */
+}
+
+
+/* Utility class: apply palette background to sections */
+.bg-palette {
+  background:
+    radial-gradient(420px 260px at 10% 20%, rgba(156,210,254,0.14), transparent 18%),
+    radial-gradient(360px 220px at 90% 80%, rgba(190,197,249,0.10), transparent 14%),
+    linear-gradient(180deg, rgba(255,255,255,0.6), rgba(255,255,255,0.25));
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(2,6,23,0.06);
+}
+
+.navbar-brand img {
+  display: block;
+  width: auto;
+  max-height: 40px;      /* mobile */
+  height: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 6px 18px rgba(2,6,23,0.06));
+}
+/* Medium and up 
+@media (min-width: 768px) {
+  .navbar-brand img { max-height: 30px; }
+}*/
+
+/* Large and up 
+@media (min-width: 1200px) {
+  .navbar-brand img { max-height: 40px; }
+}*/
+
+
+/* Optional: adjust brand font-size if using text */
+.navbar-brand .brand-text,
+.navbar-brand.logo-text {
+  font-size: 1.25rem;
+}
+
+/* Nav links */
+.navbar .nav-link{
+  font-size: 25px;
+  font-weight:600;
+  color: #000;
+  transition: color .22s ease, background .22s ease;
+  background: transparent;
+  border-radius: 8px;
+  padding: .35rem .35rem;
+  padding-top: 0.6rem;
+  margin: 0;
+}
+.navbar .nav-link:hover,
+.navbar .nav-link:focus{
+  color: #f8bff6;
+  background: linear-gradient(90deg, rgba(156,210,254,0.18), rgba(181,252,246,0.08));
+  box-shadow: 0 8px 22px rgba(6,35,58,0.06);
+  transform: translateY(-2px);
+}
+
+/* Make active / current link stand out */
+.navbar .nav-link.active{
+  color: #fff;
+  background: #58616a;
+  border-radius: 12px;
+  padding: .35rem 0;
+  box-shadow: 0 14px 36px rgba(6,35,58,0.10);
+  transform: translateY(-10px);
+  transition: transform .45s cubic-bezier(.22,.9,.35,1), opacity .35s ease;
+}
+
+/* Toggler button (visible on light bg) */
+.navbar .navbar-toggler {
+  border: 1px solid rgba(6,35,58,0.06);
+  background: linear-gradient(180deg, rgba(255,255,255,0.85), rgba(255,255,255,0.7));
+  transition: background .18s ease, transform .12s ease;
+}
+.navbar .navbar-toggler:active,
+.navbar .navbar-toggler:focus {
+  transform: scale(.98);
+}
+
+/* Toggler icon color */
+.navbar-light .navbar-toggler-icon{
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='%23222' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+}
+
+/* Remove default caret */
+.dropdown-toggle::after{ display:none !important; }
+
+/* Cards / content */
+main .card{
+  border:0;
+  border-radius:12px;
+  overflow:hidden;
+  box-shadow: 0 10px 30px var(--shadow);
+}
+.card .card-body { background: linear-gradient(180deg, rgba(255,255,255,0.85), rgba(255,255,255,0.95)); }
+
+/* ---------- Dropdown slide & color styling ---------- */
+/* Dropdown color theme (replace previous dropdown rules) */
+.dropdown { position: relative; }
+
+.dropdown-menu{
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 1200;
+  display: block;
+  min-width: 200px;
+  border-radius: 12px;
+  /* new background using palette */
+  background: #333 ;
+  text-shadow: 0px 0px 3px #000000;
+  border: 1px solid rgba(6,35,58,0.06);
+  box-shadow: 0 10px 15px rgba(255, 255, 255, 0.1);
+  padding: .35rem 0;
+  transform: translateY(-10px);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: transform .45s cubic-bezier(.22,.9,.35,1), opacity 0.35s ease, visibility .01s linear;
+  will-change: transform, opacity;
+  color: var(--text);
+}
+
+/* visible state */
+.dropdown.show > .dropdown-menu,
+.dropdown-menu.show {
+  transform: translateY(0);
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+/* dropdown items color */
+.dropdown-item{
+  color: #fff;
+  padding: .5rem 1rem;
+  transition: background .18s ease, color .12s ease;
+}
+
+/* item hover/focus - brighter gradient accent */
+.dropdown-item:hover,
+.dropdown-item:focus{
+  background: rgb(245, 200, 245);
+  color: #000;
+  transform: translateX(2px);
+}
+
+/* closing state */
+.dropdown.closing > .dropdown-menu,
+.dropdown-menu.closing{
+  transform: translateY(-14px);
+  opacity: 0;
+  visibility: visible;
+  pointer-events: none;
+}
+
+/* keep hover behavior on pointer devices */
+@media (hover: hover) and (pointer: fine){
+  .dropdown:hover > .dropdown-menu,
+  .dropdown:focus-within > .dropdown-menu{
+    transform: translateY(0);
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+  }
+}
+
+/* Accessibility: keyboard focus shows menu */
+.dropdown:focus-within > .dropdown-menu{
+  transform: translateY(0);
+  opacity:1;
+  visibility:visible;
+  pointer-events:auto;
+}
+
+/* Small polish for page */
+/* Responsive spacing */
+@media (min-width:768px){
+  .navbar .nav-item + .nav-item{ margin-left:1.25rem; }
+  .dropdown-menu{ min-width:220px; }
+}
+
+/* Footer / minor accents (use palette) */
+a.logo-accent{ color: var(--c1); font-weight:700; }
+.badge-palette{
+  background: linear-gradient(90deg,var(--c1),var(--c2));
+  color:#082032;
+  border-radius:999px;
+  padding:.25rem .6rem;
+}
+.navbar-brand {
+  display: inline-flex;
+  align-items: center;
+  transition: transform 0.18s ease, filter 0.18s ease, box-shadow 0.18s ease;
+}
+
+.navbar-brand:hover,
+.navbar-brand:focus {
+  transform: scale(1.08); /* ขยายเล็กน้อย */
+  filter: drop-shadow(0 8px 20px rgba(2,6,23,0.1)); /* เงาเบา */
+  cursor: pointer;
+}
+  @media (max-width: 767.98px) {
+    /* Make sure submenus are hidden and have no pointer events */
+    .nav-item.dropdown > .dropdown-menu {
+      display: none !important;
+      visibility: hidden !important;
+      opacity: 0 !important;
+      pointer-events: none !important;
+      height: 0 !important;
+      margin: 0 !important;
+      padding: 0 !important;
+    }
+  }
+
+/* Contact page */
+.container-contact { position: relative; width: 100%; min-height: 100vh; overflow: hidden; }
+.contact-wrapper, .wrapper-item2, .contact-details { position: relative; z-index: 2; }
+
+.contact-details {
+  margin-top: 250px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  background-color: #ffffff;
+  height: auto;
+  width: 70%;
+  border-radius: 30px;
+  padding-bottom: 40px;
+  overflow: visible;
+  position: relative;
+  right: -20px;
+}
+
+.contact-item1 { font-size: 100px; font-weight: 700; color: #000; }
+.cont-fb, .cont-ig, .cont-tiktok { margin: 10px 0; }
+.cont-fb a, .cont-ig a, .cont-tiktok a {
+  display: flex;
+  text-decoration: none;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #333;
+  transition: color 0.3s;
+  height: 50px;
+  width: 300px;
+  border-radius: 20px;
+  background-color: #b1b1b1;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+.contact-details p { margin: 0; padding-left: 20px; line-height: 0; }
+.contact-details i { position: absolute; left: 25px; }
+.cont-fb a:hover { color: #1877f2; }
+.cont-ig a:hover { color: #e1306c; }
+.cont-tiktok a:hover { color: #000; }
+
+.wrapper-item2 { position: absolute; width: 50%; height: 100vh; top: 100px; right: 0; justify-content: center; align-items: center; display: flex; }
+.contact-item2 { position: absolute; top: 0px; border-radius: 10px; overflow: hidden; left: 90px; }
+.contact-item2 img { height: 80vh; }
+.wrapper-item2 img:hover { transform: scale(1.05); box-shadow: 0 25px 50px rgba(99, 99, 99, 0.45); }
+
+.star-left, .star-right { position: absolute; top: 0; height: 100%; object-fit: cover; z-index: 0; pointer-events: none; }
+.star-left { left: 0; width: 50%; opacity: .8; }
+.star-right { right: 0; width: 50%; opacity: .7; }
+
+/* Footer */
+.footer { background: linear-gradient(to right, #b4f0ff, #e0c3fc, #fbc2eb); color: #000; padding: 20px 0; text-align: center; font-weight: 600; position: relative; bottom: 0; width: 100%; }
+.footer-content { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+.social-links a { color: #000; margin: 0 8px; font-size: 1.2rem; transition: transform 0.3s, color 0.3s; }
+.social-links a:hover { transform: scale(1.2); color: #ff66c4; }
+
+/* ================= Responsive ================= */
+
+@media (max-width: 360px) {
+  body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    margin: 0;
+    background-color: #191a1c;
+    align-items: center;
+  }
+
+  /* Navbar */
+  .navbar {
+    padding: 5px 10px;
+  }
+  .navbar .nav-link {
+    font-size: 16px; /* เล็กลง */
+    padding: 0.25rem 0.5rem;
+    margin: 0 2px;
+  }
+  .navbar-brand img {
+    max-height: 25px;
+  }
+
+  /* Contact container */
+  .contact-details {
+    width: 95%;
+    margin: 120px 0 20px 0;
+    padding: 30px 20px 40px;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 25px;
+    background-color: #fff;
+  }
+
+  /* Contact title */
+  .contact-item1 {
+    font-size: 24px;
+    text-align: center;
+    line-height: 1.5; /* เพิ่มบรรทัดเว้นให้เพียงพอ */
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+  }
+
+  /* Contact text */
+  .contact-details p {
+    font-size: 0.95rem;
+    line-height: 1.6; /* เพิ่มความสูงบรรทัด */
+    padding-left: 80px;
+    padding-right: 20px;
+    text-align: center;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    margin-left: 0;
+    margin-right: 20px
+  }
+
+  /* Social buttons */
+  .cont-fb a, .cont-ig a, .cont-tiktok a {
+    width: 100%;
+    font-size: 0.95rem;
+    font-weight: 600;
+    height: 50px;
+    margin-bottom: 15px;
+    padding-right: 20px;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    word-break: break-word;
+    text-align: center;
+  }
+  .contact-details i {
+    left: 15px;
+    font-size: 1.1rem;
+  }
+
+  /* Hide images for mobile */
+  .wrapper-item2, 
+  .contact-item2, 
+  .wrapper-item2 img, 
+  .star-left, 
+  .star-right {
+    display: none !important;
+  }
+
+  /* Footer */
+  .footer {
+    margin-top: auto;
+    width: 100%;
+    text-align: center;
+    font-size: 0.9rem;
+    padding: 15px 0;
+  }
+}
+
+
+
+
+/* Tablet / iPad (768x1024) */
+@media (min-width: 481px) and (max-width: 1024px) {
+  .contact-wrapper { width: 70%; margin-left: 50px; }
+  .contact-item1 { font-size: 70px; }
+  .cont-fb a, .cont-ig a, .cont-tiktok a { width: 250px; font-size: 1.1rem; height: 50px; }
+
+  .wrapper-item2 { 
+    width: 50%; 
+    top: 200px; /* เพิ่มจาก 50px → 120px เพื่อเลื่อนรูปลง */
+    right: 0; 
+  }
+  
+  .contact-item2 img { 
+    height: 65vh;  /* ขนาดเดิม */
+    left: 50px; 
+  }
+
+  .star-left, .star-right { width: 50vw; height: 100vh; }
+  .navbar .nav-link { font-size: 22px; }
+}
+
+
+/* Desktop / Full HD (1920x1080) */
+@media (min-width: 1025px) {
+  .contact-wrapper { width: 50%; margin-left: 170px; }
+  .contact-item1 { font-size: 100px; }
+  .cont-fb a, .cont-ig a, .cont-tiktok a { width: 300px; font-size: 1.2rem; height: 50px; }
+  .wrapper-item2 { width: 50%; top: 100px; right: 0; }
+  .contact-item2 img { height: 80vh; left: 90px; }
+  .star-left, .star-right { width: 50vw; height: 100vh; }
+  .navbar .nav-link { font-size: 25px; }
+}
+
+@media (max-width: 360px) {
+
+  /* Contact container */
+  .contact-details {
+    width: 85%;               /* <<< ลดความกว้างลง */
+    max-width: 300px;         /* <<< กันไม่ให้ใหญ่เกิน */
+    margin: 140px auto 20px;  /* <<< ชิดกลาง + มีระยะขอบ */
+    padding: 30px 20px 40px;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 25px;
+    background-color: #fff;
+    right: 0 !important;
+  }
+
+  /* Wrapper */
+  .contact-wrapper {
+    width: 100%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center; 
+  }
+}
+
+

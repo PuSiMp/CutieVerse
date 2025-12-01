@@ -1,0 +1,1286 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Cutie Verse</title>
+  <link rel="icon" type="image/webp" href="logowebsticker.webp" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@100..900&display=swap" rel="stylesheet">
+  <!-- Custom styles -->
+  <style>
+    :root{
+  --c1: #9cd2fe; /* light blue */
+  --c2: #bec5f9; /* lavender */
+  --c3: #f8bff6; /* pink */
+  --c4: #fffcf3; /* cream (page bg) */
+  --c5: #b5fcf6; /* mint */
+  --text: #111217;
+  --muted: #58616a;
+  --shadow: rgba(17,18,23,0.08);
+}
+
+/* Replace solid background with layered gradient using the palette */
+  html, body {
+  height: 100%;
+  margin: 0;
+  background-color: #191a1c; /* พื้นดำเต็มจอ */
+  font-family: "League Spartan", sans-serif;
+}
+ .navbar {
+  z-index: 1000;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  background: linear-gradient(
+    90deg,
+    rgba(156,210,254) 0%,
+    rgba(190, 197, 249) 25%,   /* ฟ้าเข้มบนสุด */
+    rgb(248, 191, 246) 50%,
+    rgba(255, 248, 188) 75%,   /* ฟ้าเข้มบนสุด */
+    rgb(181, 252, 246) 100%/* เขียวมิ้นต์จาง */
+    
+  );
+  box-shadow: 0 3px 5px #b0a5af;
+  padding: 0;
+}
+.navbar .container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* logo ซ้าย, menu ขวา */
+}
+
+
+/* Utility class: apply palette background to sections */
+.bg-palette {
+  background:
+    radial-gradient(420px 260px at 10% 20%, rgba(156,210,254,0.14), transparent 18%),
+    radial-gradient(360px 220px at 90% 80%, rgba(190,197,249,0.10), transparent 14%),
+    linear-gradient(180deg, rgba(255,255,255,0.6), rgba(255,255,255,0.25));
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(2,6,23,0.06);
+}
+
+.navbar-brand img {
+  display: block;
+  width: auto;
+  max-height: 40px;      /* mobile */
+  height: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 6px 18px rgba(2,6,23,0.06));
+}
+/* Medium and up 
+@media (min-width: 768px) {
+  .navbar-brand img { max-height: 30px; }
+}*/
+
+/* Large and up 
+@media (min-width: 1200px) {
+  .navbar-brand img { max-height: 40px; }
+}*/
+
+
+/* Optional: adjust brand font-size if using text */
+.navbar-brand .brand-text,
+.navbar-brand.logo-text {
+  font-size: 1.25rem;
+}
+
+/* Nav links */
+.navbar .nav-link{
+  font-size: 25px;
+  font-weight:600;
+  color: #000;
+  transition: color .22s ease, background .22s ease;
+  background: transparent;
+  border-radius: 8px;
+  padding: .35rem .35rem;
+  padding-top: 0.6rem;
+  margin: 0;
+}
+.navbar .nav-link:hover,
+.navbar .nav-link:focus{
+  color: #f8bff6;
+  background: linear-gradient(90deg, rgba(156,210,254,0.18), rgba(181,252,246,0.08));
+  box-shadow: 0 8px 22px rgba(6,35,58,0.06);
+  transform: translateY(-2px);
+}
+
+/* Make active / current link stand out */
+.navbar .nav-link.active{
+  color: #fff;
+  background: #58616a;
+  border-radius: 12px;
+  padding: .35rem 0;
+  box-shadow: 0 14px 36px rgba(6,35,58,0.10);
+  transform: translateY(-10px);
+  transition: transform .45s cubic-bezier(.22,.9,.35,1), opacity .35s ease;
+}
+
+/* Toggler button (visible on light bg) */
+.navbar .navbar-toggler {
+  border: 1px solid rgba(6,35,58,0.06);
+  background: linear-gradient(180deg, rgba(255,255,255,0.85), rgba(255,255,255,0.7));
+  transition: background .18s ease, transform .12s ease;
+}
+.navbar .navbar-toggler:active,
+.navbar .navbar-toggler:focus {
+  transform: scale(.98);
+}
+
+/* Toggler icon color */
+.navbar-light .navbar-toggler-icon{
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='%23222' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+}
+
+/* Remove default caret */
+.dropdown-toggle::after{ display:none !important; }
+
+/* Cards / content */
+main .card{
+  border:0;
+  border-radius:12px;
+  overflow:hidden;
+  box-shadow: 0 10px 30px var(--shadow);
+}
+.card .card-body { background: linear-gradient(180deg, rgba(255,255,255,0.85), rgba(255,255,255,0.95)); }
+
+/* ---------- Dropdown slide & color styling ---------- */
+/* Dropdown color theme (replace previous dropdown rules) */
+.dropdown { position: relative; }
+
+.dropdown-menu{
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 1200;
+  display: block;
+  min-width: 200px;
+  border-radius: 12px;
+  /* new background using palette */
+  background: #333 ;
+  text-shadow: 0px 0px 3px #000000;
+  border: 1px solid rgba(6,35,58,0.06);
+  box-shadow: 0 10px 15px rgba(255, 255, 255, 0.1);
+  padding: .35rem 0;
+  transform: translateY(-10px);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: transform .45s cubic-bezier(.22,.9,.35,1), opacity 0.35s ease, visibility .01s linear;
+  will-change: transform, opacity;
+  color: var(--text);
+}
+
+/* visible state */
+.dropdown.show > .dropdown-menu,
+.dropdown-menu.show {
+  transform: translateY(0);
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+/* dropdown items color */
+.dropdown-item{
+  color: #fff;
+  padding: .5rem 1rem;
+  transition: background .18s ease, color .12s ease;
+}
+
+/* item hover/focus - brighter gradient accent */
+.dropdown-item:hover,
+.dropdown-item:focus{
+  background: rgb(245, 200, 245);
+  color: #000;
+  transform: translateX(2px);
+}
+
+/* closing state */
+.dropdown.closing > .dropdown-menu,
+.dropdown-menu.closing{
+  transform: translateY(-14px);
+  opacity: 0;
+  visibility: visible;
+  pointer-events: none;
+}
+
+/* keep hover behavior on pointer devices */
+@media (hover: hover) and (pointer: fine){
+  .dropdown:hover > .dropdown-menu,
+  .dropdown:focus-within > .dropdown-menu{
+    transform: translateY(0);
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+  }
+}
+
+/* Accessibility: keyboard focus shows menu */
+.dropdown:focus-within > .dropdown-menu{
+  transform: translateY(0);
+  opacity:1;
+  visibility:visible;
+  pointer-events:auto;
+}
+
+/* Small polish for page */
+/* Responsive spacing */
+@media (min-width:768px){
+  .navbar .nav-item + .nav-item{ margin-left:1.25rem; }
+  .dropdown-menu{ min-width:220px; }
+}
+
+/* Footer / minor accents (use palette) */
+a.logo-accent{ color: var(--c1); font-weight:700; }
+.badge-palette{
+  background: linear-gradient(90deg,var(--c1),var(--c2));
+  color:#082032;
+  border-radius:999px;
+  padding:.25rem .6rem;
+}
+.navbar-brand {
+  display: inline-flex;
+  align-items: center;
+  transition: transform 0.18s ease, filter 0.18s ease, box-shadow 0.18s ease;
+}
+
+.navbar-brand:hover,
+.navbar-brand:focus {
+  transform: scale(1.08); /* ขยายเล็กน้อย */
+  filter: drop-shadow(0 8px 20px rgba(2,6,23,0.1)); /* เงาเบา */
+  cursor: pointer;
+}
+  @media (max-width: 767.98px) {
+    /* Make sure submenus are hidden and have no pointer events */
+    .nav-item.dropdown > .dropdown-menu {
+      display: none !important;
+      visibility: hidden !important;
+      opacity: 0 !important;
+      pointer-events: none !important;
+      height: 0 !important;
+      margin: 0 !important;
+      padding: 0 !important;
+    }
+  }
+/* END NAV END NAV END NAV END NAV END NAV END NAV END NAV END NAV */
+.wrapper {
+  width: 100%;
+  height: 100vh;               /* ความสูงเต็มหน้าจอ */
+  overflow: hidden;            /* ซ่อนส่วนที่เกิน */
+  display:  flex;
+  justify-content: center;     /* จัดกึ่งกลางแนวนอน */
+  align-items: center;         /* จัดกึ่งกลางแนวตั้ง */
+  background-repeat: no-repeat;
+  background-attachment: fixed; /* เลื่อนจอแล้วพื้นหลังอยู่กับที่ */
+  background-position: center;
+  background-size: cover; /* ปรับขนาดเต็มหน้าจอ */
+  color: var(--text);
+  top: 0px;
+  z-index: 1;
+  position: relative;
+}
+@media (max-width: 768px) {
+  .wrapper {
+    height: 100vh;              /* ลดความสูงบนมือถือ */
+    padding: 20px;             /* เพิ่มระยะขอบ */
+    flex-direction: column;    /* ถ้ามี element หลายตัว ให้ stack แนวตั้ง */
+  }
+  @media (max-width: 576px) {
+    .wrapper {
+      height: 600px;          /* ลดความสูงบนมือถือจอเล็ก */
+    }
+  }
+}
+.bg1 img{
+    filter: blur(1px);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-size: cover; /* ปรับภาพให้เต็มหน้าจอ */
+    background-position: center; /* จัดกลาง */
+    background-repeat: no-repeat; /* ไม่ให้ซ้ำ */
+    z-index: -1;
+      -webkit-mask-image: linear-gradient(to bottom,
+    rgba(0, 0, 0, 1) 70%, /* 70% แรกทึบเต็มที่ (สีดำ = ทึบ) */
+    rgba(0, 0, 0, 0) 100%  /* 30% สุดท้ายไล่ระดับไปจนโปร่งใส (สีขาว = ทึบ, สีดำ = โปร่งใสในกรณี mask-image) */
+  );
+  mask-image: linear-gradient(to bottom,
+    rgba(0, 0, 0, 1) 70%,
+    rgba(0, 0, 0, 0) 100%
+  );
+}
+.pic-h {
+  display: block;
+  max-width: 60%;               /* ปรับขนาดไม่เกิน 80% ของ container */
+  height: auto;                 /* รักษาอัตราส่วนภาพ */
+  margin: 0 auto;               /* จัดให้อยู่กลางแนวนอน */
+  filter: drop-shadow(  0 8px 20px rgba(255, 255, 255, 0.5)); /* เงาเบา */
+  transition: transform 0.3s ease;
+}
+.pic-h:hover {
+  transform: scale(1.05);      
+  transition: transform 0.3s ease;
+}
+.container-sli {
+  width: 100%;              /* ความสูงเต็มหน้าจอ */
+
+  overflow: hidden;            /* ซ่อนส่วนที่เกิน */
+  display:  flex;
+  justify-content: center;     /* จัดกึ่งกลางแนวนอน */
+  align-items: center;         /* จัดกึ่งกลางแนวตั้ง */
+  position: absolute;
+  top: 52px;
+  left: 0;
+  z-index: 0;
+  -webkit-mask-image: linear-gradient(to bottom,
+    rgba(0, 0, 0, 1) 70%, /* 70% แรกทึบเต็มที่ (สีดำ = ทึบ) */
+    rgba(0, 0, 0, 0) 100%  /* 30% สุดท้ายไล่ระดับไปจนโปร่งใส (สีขาว = ทึบ, สีดำ = โปร่งใสในกรณี mask-image) */
+  );
+  mask-image: linear-gradient(to bottom,
+    rgba(0, 0, 0, 1) 70%,
+    rgba(0, 0, 0, 0) 100%
+  );
+}
+.slide-wrapper {
+  display: flex;
+  width: 200vw;                /* ความกว้างรวมของภาพทั้งหมด */
+  height: auto;
+  animation: slide-loop 60s linear infinite;
+}
+.container-sli img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  flex-shrink: 0;
+  display: block;
+  opacity: 0.6;
+}
+@media (max-width: 576px) {
+  .container-sli {
+       /* ลดความสูงบนมือถือจอเล็ก */
+  }
+}
+
+@keyframes slide-loop {
+  0%, 4% {
+    transform: translateX(0); 
+  }
+
+  48%, 52% {
+    transform: translateX(-100vw); 
+  }
+
+  96%, 100% {
+    transform: translateX(0); 
+  }
+}
+
+/* เพิ่ม responsive สำหรับหน้าจอใหญ่ขึ้น */
+@media (max-width: 768px) {
+  .pic-h {
+    max-width: 50%;            
+  }
+}
+
+
+.str-blue {
+  position: absolute;
+  top: 120px;
+  left: 100px;
+  width: 100px;
+  height: auto;
+  filter: drop-shadow(0 8px 10px rgba(255, 255, 255, 0.5)); /* เงาเบา */
+}
+.bll-1 {
+  position: absolute;
+  top: 250px;
+  left: 250px;
+  width: 50px;
+  height: auto;
+  filter: drop-shadow(0 8px 10px rgba(255, 255, 255, 0.5)); /* เงาเบา */
+}
+.str-yellow {
+  position: absolute;
+  top: 285px;
+  left: 50px;
+  width: 170px;
+  transform: rotate(45deg);
+  height: auto;
+  filter: drop-shadow(0 8px 10px rgba(255, 255, 255, 0.5)); /* เงาเบา */
+}
+.bll-2 {
+  position: absolute;
+  top: 525px;
+  left: 100px;
+  width: 25px;
+  height: auto;
+  filter: drop-shadow(0 8px 10px rgba(255, 255, 255, 0.5)); /* เงาเบา */
+}
+.str-green {
+  position: absolute;
+  bottom: 50px;
+  left: 225px;
+  width: 125px;
+  height: auto;
+  filter: drop-shadow(0 8px 10px rgba(255, 255, 255, 0.5)); /* เงาเบา */
+  transform: rotate(90deg);
+}
+.bll-3{
+  position: absolute;
+  top: 110px;
+  right: 415px;
+  width: 50px;
+  height: auto;
+  filter: drop-shadow(0 8px 10px rgba(255, 255, 255, 0.5)); /* เงาเบา */
+}
+.bll-4{
+  position: absolute;
+  top: 150px;
+  right: 50px;
+  width: 60px;
+  height: auto;
+  filter: drop-shadow(0 8px 10px rgba(255, 255, 255, 0.5)); /* เงาเบา */
+}
+.str-pink {
+  position: absolute;
+  top: 200px;
+  right: 140px;
+  width: 150px;
+  height: auto;
+  filter: drop-shadow(0 8px 10px rgba(255, 255, 255, 0.5)); /* เงาเบา */
+  transform: rotate(80deg);
+}
+.saturn {
+  position: absolute;
+  bottom: 50px;
+  right: 50px;
+  width: 300px;
+  height: auto;
+  filter: drop-shadow(0 8px 10px rgba(255, 255, 255, 0.5)); /* เงาเบา */
+}
+@media (max-width: 575px) {
+  .str-blue {
+    display: none;
+  }
+  .bll-1 {
+    display: none;
+  }
+  .str-yellow {
+    display: none;
+  }
+  .bll-2 {
+    display: none;
+  }
+  .str-green {
+    display: none;
+  }
+  .bll-3{
+    display: none;
+  }
+  .bll-4{
+    display: none;
+  }
+  .str-pink {
+    display: none;
+  }
+  .saturn {
+    display: none;
+}
+}
+@media (min-width: 576px) and (max-width: 767px) {
+  .str-blue {
+    width: 70px;
+    top: 80px;
+    left: 50px;
+  }
+  .bll-1 {
+    width: 40px;
+    top: 188px;
+    left: 20px;
+  }
+  .str-yellow {
+    width: 110px;
+    top: 230px;
+    left: 30px;
+  }
+  .bll-2 {
+    width: 18px;
+    top: 370px;
+    left: 120px;
+  }
+  .str-green {
+    width: 80px;
+    top: 400px;
+    left: 15px;
+  }
+  .bll-3{
+    width: 40px;
+    top: 80px;
+    right: 130px;
+  }
+  .bll-4{
+    width: 40px;
+  }
+  .str-pink {
+    width: 90px;
+    top: 200px;
+    right: 70px;
+  }
+  .saturn {
+    width: 150px;
+    top: 340px;
+    right: 10px; }
+}
+@media (min-width: 768px) {
+  .str-blue {
+    width: 100px;
+    top: 80px;
+    left: 100px;
+    width: 100px;
+  }
+  .bll-1 {
+    width: 50px;
+    top: 188px;
+    left: 33px;
+  }
+  .str-yellow {
+    width: 132px;
+    top: 230px;
+    left: 50px;
+  }
+  .bll-2 {
+    width: 23px;
+    top: 370px;
+    left: 150px;
+  }
+  .str-green {
+    width: 100px;
+    top: 400px;
+    left: 20px;
+  }
+  .bll-3{
+    width: 50px;
+    top: 80px;
+    right: 160px;
+  }
+  .bll-4{
+    width: 53px;
+  }
+  .str-pink {
+    width: 112px;
+    top: 200px;
+    right: 100px;
+  }
+  .saturn {
+    width: 180px;
+    top: 340px;
+    right: 10px; }
+}
+.scr-r img {
+    transition: transform 0.1s linear; /* ทำให้ขยับ smooth */
+    will-change: transform; /* browser render smoother */
+    transform: translateX(0); /* เริ่มตรงกลาง */
+
+}
+.scr-l img {
+    transition: transform 0.1s linear; /* ทำให้ขยับ smooth */
+    will-change: transform; /* browser render smoother */
+    transform: translateX(0); /* เริ่มตรงกลาง */
+}
+.home-text {
+  position: absolute;
+  left: 50%;
+  bottom: 7vh;                     /* ล็อกระยะจากล่างจอ (ปรับค่านี้ได้ตามใจเลย) */
+  transform: translateX(-50%);
+  width: 90%;
+  max-width: 800px;
+  color: #fff;
+  font-size: clamp(1.1rem, 2.8vw, 1.8rem);   /* ขนาดตัวอักษร responsive แต่ไม่ลอย */
+  text-align: center;
+  text-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+  z-index: 3;
+  line-height: 1.4;          /* ไม่ให้ข้อความบังคลิกโลโก้ */
+  /* ล็อกตายตัวเพิ่มเติม */
+  margin: 0;
+  padding: 0;
+}
+
+.container-work {
+  position: relative;
+  display: block;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh; /* กำหนดความสูงของ container */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2; /* ให้ container อยู่เหนือ background */
+  overflow: hidden;
+}
+.w-board {
+  aspect-ratio: 1 / 1 !important;
+  max-width: 1080px !important;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.board-pic {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  z-index: 1;
+}
+@media (max-width: 768px) {
+  .w-board {
+    width: 90vw !important;             /* บนมือถือเต็มจอ */
+    max-width: none !important;         /* เพิ่มช่องว่างระหว่างไอเท็ม */
+  }
+  .board-pic {
+    height: 60%;
+    width: 140%;  
+    object-fit: fill;                  /* ปรับภาพให้เต็มบนมือถือ */
+  }
+}
+.work-category {
+  position: relative;
+  z-index: 2;
+  width: 60%;
+  gap: 30px;
+  display: grid !important;
+  grid-template-columns: 1fr 1fr !important;
+  grid-template-rows: 1fr 1fr !important;
+  place-items: center !important;
+  box-sizing: border-box !important;
+}
+@media (max-width: 768px) {
+  .work-category {
+    width: 80%;
+    grid-template-columns: 1fr 1fr !important;
+    grid-template-rows: auto auto auto auto !important; /* 4 แถว บนมือถือ */
+    gap: 15px !important; /* เพิ่มช่องว่างระหว่างไอเท็ม */
+  }
+}
+
+/* adjust image sizing inside each work-item (only size & position) */
+.work-category .work-item {
+  width: 100% !important;
+  height: 100% !important;
+  max-width: 260px !important;     /* ล็อคขนาด item ไม่ให้เกิน 195px */
+  max-height: 260px !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  transition: transform 0.32s ease !important;
+}
+
+.work-category .work-item img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: contain !important;
+  object-position: center;
+  background: transparent !important;
+}
+
+/* Tablet กลาง ๆ */
+.work-category .work-item:hover {
+  transform: scale(1.10) !important;
+  filter: brightness(1.1);
+}
+/* 🔹 work-detail position */
+.work-detail {
+  position: relative;
+  min-height: 120px;
+}
+
+.work-detail > div {
+  opacity: 0;
+  transform: translateX(0);
+  transition: opacity .35s, transform .35s;
+  position: absolute;
+  left: -250px;
+  top: 0;
+  width: 200px;
+  z-index: 1;
+  padding: 10px;
+  transition: transform 0.5s ease;
+}
+
+
+/* bg color */
+.draw-detail {
+  background: #EEAECA;
+  background:  linear-gradient(
+    rgba(156,210,254) 0%,
+    rgba(190, 197, 249) 25%,   /* ฟ้าเข้มบนสุด */
+    rgb(248, 191, 246) 50%,
+    rgb(181, 252, 246) 100%/* เขียวมิ้นต์จาง */
+  );
+  border-radius: 5px;
+}
+.threed-detail {
+  background: #EEAECA;
+  background:  linear-gradient(
+    rgba(156,210,254) 0%,
+    rgba(190, 197, 249) 25%,   /* ฟ้าเข้มบนสุด */
+    rgb(248, 191, 246) 50%,
+    rgb(181, 252, 246) 100%/* เขียวมิ้นต์จาง */
+  );
+  border-radius: 5px;
+}
+.prod-detail {
+  background: #EEAECA;
+  background:  linear-gradient(
+    rgba(156,210,254) 0%,
+    rgba(190, 197, 249) 25%,   /* ฟ้าเข้มบนสุด */
+    rgb(248, 191, 246) 50%,
+    rgb(181, 252, 246) 100%/* เขียวมิ้นต์จาง */
+  );
+  background: #EEAECA;
+  background:  linear-gradient(
+    rgba(156,210,254) 0%,
+    rgba(190, 197, 249) 25%,   /* ฟ้าเข้มบนสุด */
+    rgb(248, 191, 246) 50%,
+    rgb(181, 252, 246) 100%/* เขียวมิ้นต์จาง */
+  );
+  border-radius: 5px;
+}
+.graphic-detail {
+  background: #EEAECA;
+  background:  linear-gradient(
+    rgba(156,210,254) 0%,
+    rgba(190, 197, 249) 25%,   /* ฟ้าเข้มบนสุด */
+    rgb(248, 191, 246) 50%,
+    rgb(181, 252, 246) 100%/* เขียวมิ้นต์จาง */
+  );
+  border-radius: 5px;
+
+}
+/* ---------- Centering container-board ---------- */
+.container-board {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh; /* center แนวตั้ง */
+  width: 100%;
+  transition: justify-content .3s, align-items .3s;
+  transition: transform 1s cubic-bezier(.22,.9,.35,1);
+}
+.container-board.move-left {
+  transform: translateX(-140px);
+}
+section {
+  width: 100%;
+  height: 100vh; /* เต็มความสูงหน้าจอ */
+  overflow: hidden; /* ไม่ให้เห็นภาพที่อยู่นอกจอ */
+  align-items: center;
+  justify-content: center;
+  display: flex;
+}
+
+.container-gif {
+  display: flex;
+  width: 100%;
+  height: auto;
+}
+
+
+.gif-cutieverse {
+  width: 100%; 
+  height: auto;
+  object-fit: cover; 
+  flex-shrink: 0;
+  display: block;
+}
+ 
+.container-gif2 {
+  width: 100%;
+  height: auto;
+  object-fit: cover; 
+  flex-shrink: 0;
+  display: block;
+}
+.footer {
+  background: linear-gradient(to right, #b4f0ff, #e0c3fc, #fbc2eb); /* ไล่สีพาสเทล */
+  color: #000;
+  padding: 20px 0;
+  text-align: center;
+  font-weight: 600;
+  position: relative;
+  bottom: 0;
+  width: 100%;
+  
+}
+
+.footer-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.social-links a {
+  color: #000;
+  margin: 0 8px;
+  font-size: 1.2rem;
+  transition: transform 0.3s, color 0.3s;
+}
+
+.social-links a:hover {
+  transform: scale(1.2);
+  color: #ff66c4;
+}
+.container-contact {
+            display: flex; /* เปิดใช้งาน Flexbox สำหรับการแบ่งซ้ายขวา */
+            flex-wrap: wrap; /* อนุญาตให้คอลัมน์ขึ้นบรรทัดใหม่เมื่อหน้าจอแคบ */
+            min-height: 100vh; /* ให้เต็มความสูงของหน้าจอ */
+        }
+
+        /* สไตล์สำหรับแต่ละคอลัมน์ */
+        .column {
+            flex: 1; /* ทำให้คอลัมน์ขยายตัวเท่าๆ กัน */
+            padding: 20px;
+            box-sizing: border-box;
+            min-width: 50%; /* กำหนดความกว้างขั้นต่ำก่อนจะขึ้นบรรทัดใหม่ */
+        }
+
+        /* สไตล์สำหรับคอลัมน์ซ้าย (Contact) */
+        .left-column-contact {
+            display: flex;
+            flex-direction: column;
+            justify-content: center; /* จัดให้อยู่ตรงกลางแนวตั้ง */
+            align-items: center; /* จัดให้อยู่ตรงกลางแนวนอน */
+            text-align: center;
+        }
+
+        /* สไตล์สำหรับ "กล่อง" Contact ภายในคอลัมน์ซ้าย */
+        .contact-box {
+          background-color: aliceblue;
+            border: 2px solid #ccc;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow:   0 4px 8px rgba(190, 190, 190, 0.3);
+            max-width: 400px;
+            width: 100%;
+        }
+
+        .contact-box h2 {
+            margin-top: 0;
+            color: #333;
+        }
+
+        /* สไตล์สำหรับไอคอนโซเชียล */
+        .social-icons a {
+            font-size: 30px;
+            margin: 0 15px;
+            color: #555;
+            transition: color 0.3s;
+            text-decoration: none;
+        }
+
+        .social-icons a:hover {
+            color: #007bff; /* เปลี่ยนสีเมื่อโฮเวอร์ */
+        }
+
+        /* สไตล์เฉพาะไอคอน (ถ้าต้องการให้มีสีตามแบรนด์) */
+        .fa-facebook { color: #3b5998; }
+        .fa-instagram { color: #E1306C; }
+        .fa-tiktok { color: #000000; }
+
+        /* สไตล์สำหรับคอลัมน์ขวา (Image) */
+        .right-column-image {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .image-placeholder {
+            max-width: 60%;  
+        }
+
+        /* Media Query: สำหรับหน้าจอที่มีความกว้างน้อยกว่า 768px */
+        @media (max-width: 768px) {
+            .container-contact {
+                flex-direction: column; /* เรียงคอลัมน์ซ้อนกันในแนวตั้ง */
+            }
+
+            .column {
+                min-width: 100%; /* ให้แต่ละคอลัมน์กินพื้นที่เต็มความกว้าง */
+                height: auto;
+            }
+
+            /* กำหนดความสูงสำหรับรูปภาพในโหมดมือถือ */
+            .right-column-image {
+                min-height: 300px;
+            }
+            .image-placeholder {
+                max-width: 50%;  
+            }
+        }
+
+        /* Media Query: สำหรับหน้าจอ Desktop/Tablet */
+        @media (min-width: 769px) {
+            .left-column-contact {
+                /* กำหนดความกว้างเริ่มต้นให้คอลัมน์ซ้าย (ตัวอย่าง 40%) */
+                flex: 2; 
+            }
+            .right-column-image {
+                 /* กำหนดความกว้างเริ่มต้นให้คอลัมน์ขวา (ตัวอย่าง 60%) */
+                flex: 3;
+            }
+        }
+  /* ...existing CSS... */
+
+
+  </style>
+    <!-- Footer -->
+  <!-- Bootstrap JS bundle (Popper included) -->
+     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  const scrollImgsLeft = document.querySelectorAll('.scr-l img');
+  const scrollImgsRight = document.querySelectorAll('.scr-r img');
+
+  if (scrollImgsLeft.length === 0 && scrollImgsRight.length === 0) return;
+
+  let ticking = false;
+
+  function updateParallax() {
+    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+
+    scrollImgsLeft.forEach(img => {
+      const speed = -0.5;
+      img.style.transform = `translateX(${scrollTop * speed}px)`;
+    });
+
+    scrollImgsRight.forEach(img => {
+      const speed = 0.5;
+      img.style.transform = `translateX(${scrollTop * speed}px)`;
+    });
+
+    ticking = false;
+  }
+
+  window.addEventListener('scroll', function () {
+    if (!ticking) {
+      window.requestAnimationFrame(updateParallax);
+      ticking = true;
+    }
+  }, { passive: true });
+
+  // เรียกครั้งแรกเพื่อกำหนดตำแหน่งเริ่มต้น
+  updateParallax();
+});
+</script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  var hoverCapable = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+  var isSmallScreen = window.matchMedia('(max-width: 767.98px)').matches;
+
+  document.querySelectorAll('.dropdown-toggle').forEach(function (toggle) {
+    // On small screens we want no dropdown toggling: keep 'work' as a normal link
+    if (isSmallScreen) {
+      toggle.removeAttribute('data-bs-toggle');
+      // Also ensure aria attributes are correct
+      toggle.setAttribute('aria-expanded', 'false');
+    } else {
+      // keep current behavior for larger screens
+      if (hoverCapable) {
+        toggle.removeAttribute('data-bs-toggle');
+      } else {
+        if (!toggle.hasAttribute('data-bs-toggle')) {
+          toggle.setAttribute('data-bs-toggle', 'dropdown');
+        }
+      }
+    }
+
+    // keyboard support
+    toggle.addEventListener('keydown', function (e) {
+      var code = e.key || e.keyCode;
+      if (code === 'Enter' || code === ' ' || code === 13 || code === 32) {
+        e.preventDefault();
+        if (window.bootstrap && bootstrap.Dropdown) {
+          var dd = bootstrap.Dropdown.getOrCreateInstance(toggle);
+          dd.toggle();
+        }
+      }
+    });
+  });
+
+  // only attach hover open/close logic on hover-capable bigger screens
+  if (hoverCapable && !isSmallScreen) {
+    document.querySelectorAll('.dropdown').forEach(function (drop) {
+      var toggle = drop.querySelector('.dropdown-toggle');
+      var menu = drop.querySelector('.dropdown-menu');
+      var openTimer = null;
+      var closeTimer = null;
+      var openDelay = 600;   // small delay before opening
+      var closeDelay = 600;  // longer delay to allow pointer movement
+
+      function doOpen() {
+        clearTimeout(closeTimer);
+        drop.classList.add('show');
+        if (menu) menu.classList.add('show');
+        if (toggle) toggle.setAttribute('aria-expanded', 'true');
+      }
+
+      function doClose() {
+        clearTimeout(openTimer);
+        // add closing class so CSS moves it out smoothly
+        drop.classList.add('closing');
+        if (menu) menu.classList.add('closing');
+
+        // wait for transitionend on the menu, then remove classes
+        var onEnd = function (e) {
+          // ensure we respond to transform/opacity transition only
+          if (e.propertyName !== 'transform' && e.propertyName !== 'opacity') return;
+          // cleanup
+          drop.classList.remove('show', 'closing');
+          if (menu) menu.classList.remove('show', 'closing');
+          if (toggle) toggle.setAttribute('aria-expanded', 'false');
+          // remove listener
+          if (menu) menu.removeEventListener('transitionend', onEnd);
+        };
+
+        // if menu exists attach listener, otherwise remove immediately
+        if (menu) {
+          menu.addEventListener('transitionend', onEnd);
+          // fallback: if transitionend doesn't fire, force cleanup after timeout (match CSS duration + margin)
+          setTimeout(function () {
+            if (drop.classList.contains('closing')) {
+              drop.classList.remove('show', 'closing');
+              if (menu) menu.classList.remove('show', 'closing');
+              if (toggle) toggle.setAttribute('aria-expanded', 'false');
+              if (menu) menu.removeEventListener('transitionend', onEnd);
+            }
+          }, 700); // should be longer than CSS transition (.45s -> 700ms)
+        } else {
+          drop.classList.remove('show', 'closing');
+          if (toggle) toggle.setAttribute('aria-expanded', 'false');
+        }
+      }
+
+      // attach listeners to the container, the toggle and the menu so moving between them won't close
+      [drop, toggle, menu].forEach(function (el) {
+        if (!el) return;
+        el.addEventListener('mouseenter', function () {
+          clearTimeout(closeTimer);
+          openTimer = setTimeout(doOpen, openDelay);
+        });
+        el.addEventListener('mouseleave', function () {
+          clearTimeout(openTimer);
+          closeTimer = setTimeout(doClose, closeDelay);
+        });
+      });
+
+      // optional: keep menu open while focusing inside (keyboard)
+      drop.addEventListener('focusin', function () {
+        clearTimeout(closeTimer);
+        doOpen();
+      });
+      drop.addEventListener('focusout', function () {
+        clearTimeout(openTimer);
+        closeTimer = setTimeout(doClose, closeDelay);
+      });
+    });
+  }
+
+  document.querySelectorAll('.work-item').forEach(item => {
+    item.addEventListener('mouseenter', function() {
+      const detailType = item.getAttribute('data-detail');
+      document.querySelectorAll('.work-detail > div').forEach(d => {
+        d.style.opacity = '0';
+        d.style.transform = 'translateX(0)';
+        d.style.zIndex = '1';
+      });
+      const target = document.querySelector('.' + detailType + '-detail');
+      if (target) {
+        target.style.opacity = '1';
+        target.style.transform = 'translateX(40px)'; // slide ขวาแบบไม่หลุดกรอบ
+        target.style.zIndex = '2';
+      }
+    });
+    item.addEventListener('mouseleave', function() {
+      document.querySelectorAll('.work-detail > div').forEach(d => {
+        d.style.opacity = '0';
+        d.style.transform = 'translateX(0)';
+        d.style.zIndex = '1';
+      });
+    });
+  });
+
+  document.querySelectorAll('.work-item').forEach(item => {
+    item.addEventListener('mouseenter', function() {
+      document.querySelector('.container-board').classList.add('move-left');
+    });
+    item.addEventListener('mouseleave', function() {
+      document.querySelector('.container-board').classList.remove('move-left');
+    });
+  });
+});
+
+const scrollImgsLeft = document.querySelectorAll('.scr-l img');
+const scrollImgsRight = document.querySelectorAll('.scr-r img');
+
+window.addEventListener('scroll', () => {
+  const scrollTop = window.pageYOffset;
+
+  // เลื่อนซ้าย
+  scrollImgsLeft.forEach(img => {
+    const speed = -0.5; // ติดลบ = ไปซ้าย
+    const xMove = scrollTop * speed;
+    img.style.transform = `translateX(${xMove}px)`;
+  });
+
+  // เลื่อนขวา
+  scrollImgsRight.forEach(img => {
+    const speed = 0.5; // บวก = ไปขวา
+    const xMove = scrollTop * speed;
+    img.style.transform = `translateX(${xMove}px)`;
+  });
+});
+  </script>
+</head>
+<body>
+
+<!-- navbar -->
+  <nav class="navbar navbar-expand-md navbar-light navbar-gradient">
+    <div class="container">
+      <a class="navbar-brand fw-bold mb-0" href="index.html">
+        <img src="logowebsticker.webp" alt="logo">
+      </a>
+
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav" alt="menu" aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="mainNav">
+        <ul class="navbar-nav ms-auto align-items-center">
+          <li class="nav-item"><a class="nav-link" href="index.html">home</a></li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="work.html" id="workDropdown" data-bs-toggle="dropdown">work</a>
+            <ul class="dropdown-menu dropdown-menu-end">
+              <li><a class="dropdown-item" href="drawing.html">Drawing</a></li>
+              <li><a class="dropdown-item" href="graphic.html">Graphic</a></li>
+              <li><a class="dropdown-item" href="photo.html">Photo</a></li>
+              <li><a class="dropdown-item" href="3D.html">3D Model</a></li>
+            </ul>
+          </li>
+          <li class="nav-item"><a class="nav-link" href="team.html">team</a></li>
+          <li class="nav-item"><a class="nav-link" href="contact.html">contact</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HomePage Container -->
+     
+  <main class="container-home">
+    <section class="wrapper">
+      <div class="container-sli">
+        <div class="slide-wrapper">
+          <img src="slide1.jpg" alt="">
+          <img src="slide2.jpg" alt="">
+        </div>
+      </div>
+      <div class="container-logo">
+        <a href="index.html"><img src="logowebsticker.webp" alt="logo" class="pic-h"></a>
+        <div class="scr-l" id="parallax-element">
+          <img src="grblues.webp" class="str-blue">
+          <img src="grc1.webp" class="bll-1">
+          <img src="gryellows.webp" class="str-yellow">
+          <img src="grc2.webp" class="bll-2">
+          <img src="grgreens.webp" class="str-green">
+        </div>
+        <div class="scr-r">
+          <img src="grc3.webp" class="bll-3">
+          <img src="grc4.webp" class="bll-4">
+          <img src="grpinks.webp" class="str-pink">
+          <img src="grsaturn.webp" class="saturn">
+        </div>
+        <div class="home-text">
+          <p style="font-weight: 500; font-size: 1.5em;">Dive into a colorful universe of multimedia works !</p>
+          <p style="color: ">Discover our cutie creations</p>
+          <p>— illustrations, 3D models, graphics,</p>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- Work Container -->
+<section class="container-work">
+      <div class="container-board">
+        <div class="w-board">
+          <img src="board1.png" alt="board" class="board-pic">
+          <div class="work-category">
+            <a href="drawing.html" class="work-item" data-detail="draw" alt="drawing page"><img src="drawing.webp" alt=""></a>
+            <a href="3D.html" class="work-item" data-detail="threed" alt="3D model page"><img src="3dd.webp" alt=""></a>
+            <a href="photo.html" class="work-item" data-detail="prod" alt="photo page"><img src="photo.webp" alt=""></a>
+            <a href="graphic.html" class="work-item" data-detail="graphic" alt="graphic page"><img src="graphic.webp" alt=""></a>
+          </div>
+        </div>
+        <div class="work-detail">
+            <div class="draw-detail">Drawing Whimsical drawings that express imagination and heart. From cute doodles to lively illustrations, each piece celebrates creativity and the joy of making art.</div>
+            <div class="threed-detail">3D Creative 3D models and animations that bring ideas to life. Combining technical skill with artistic vision to craft immersive and engaging digital experiences.</div>
+            <div class="prod-detail">PhotoA collection of happy moments and colorful stories captured through the lens. Each photo reflects a sense of joy, curiosity, and the beauty of simple things.</div>
+            <div class="graphic-detail">Graphic Bright and cheerful graphic designs full of personality. Mixing bold colors, cute elements, and thoughtful layouts to create visuals that make people smile.</div>
+          </div>
+      </div>
+      </div>
+    </section>
+
+    <!-- GIF Container -->
+    <section>
+      <div class="container-gif">
+        <img src="gif-khim.webp" alt="cutieversegif" class="gif-cutieverse">
+      </div>
+    </section>
+
+    <!-- contact Container -->
+      <!-- contact Container -->
+ <div class="container-contact">
+    
+    <div class="column left-column-contact">
+        <div class="contact-box">
+            <h2>Contact Us</h2>
+            <p>For more information, please contact us at:</p>
+            <div class="social-icons">
+                <a href="#" target="_blank" title="Facebook">
+                    <i class="fab fa-facebook"><img src="face.webp" alt="Facebook" style="max-width: 40px;"></i>
+                </a>
+                
+                <a href="#" target="_blank" title="Instagram">
+                    <i class="fab fa-instagram"><img src="IG.webp" alt="Instagram" style="max-width: 40px;"></i>
+                </a>
+                
+                <a href="#" target="_blank" title="TikTok">
+                    <i class="fab fa-tiktok"><img src="tiktok.webp" alt="TikTok" style="max-width: 40px;"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="column right-column-image">
+        <img src="contact.webp" alt="Placeholder Image" class="image-placeholder">
+    </div>
+
+</div>
+    <section>
+      <img src="gif-mhai.webp" alt="" class="container-gif2">
+    </section>
+    <footer class="footer">
+  <div class="footer-content">
+    <p>© 2025 Cutie Verse </p>
+  </div>
+   </footer>
+  </main>
+
+
+</body>
+</html>

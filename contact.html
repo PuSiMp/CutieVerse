@@ -1,415 +1,79 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Cutie Verse</title>
   <link rel="icon" type="image/webp" href="logowebsticker.webp" />
- <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <!-- Google Fonts: League Spartan -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@100..900&display=swap" rel="stylesheet">
+  <!-- Bootstrap CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
- 
+
   <!-- Custom styles -->
-  <style>:root{
-  --c1: #9cd2fe; /* light blue */
-  --c2: #bec5f9; /* lavender */
-  --c3: #f8bff6; /* pink */
-  --c4: #fffcf3; /* cream (page bg) */
-  --c5: #b5fcf6; /* mint */
-  --text: #111217;
-  --muted: #58616a;
-  --shadow: rgba(17,18,23,0.08);
-}
+  <link rel="stylesheet" href="contact2.css">
 
-/* Replace solid background with layered gradient using the palette */
-html, body {
-  height: 100%;
-  margin: 0;
-  background-color: #191a1c; /* พื้นดำเต็มจอ */
-  font-family: "League Spartan", sans-serif;
-}
-/* Navbar: palette colors top (opacity 1) -> bottom (opacity 0) over black */
-   .navbar {
-  z-index: 1000;
-  position: fixed;
-  width: 100%;
-  top: 0;
-  background: linear-gradient(
-    90deg,
-    rgba(156,210,254) 0%,
-    rgba(190, 197, 249) 25%,   /* ฟ้าเข้มบนสุด */
-    rgb(248, 191, 246) 50%,
-    rgba(255, 248, 188) 75%,   /* ฟ้าเข้มบนสุด */
-    rgb(181, 252, 246) 100%/* เขียวมิ้นต์จาง */
-    
-  );
-  box-shadow: 0 3px 5px #b0a5af;
-  padding: 0;
-}
-.navbar .container {
-  display: flex;
-  align-items: center;
-  justify-content: space-between; /* logo ซ้าย, menu ขวา */
-}
-
-
-/* Utility class: apply palette background to sections */
-.bg-palette {
-  background:
-    radial-gradient(420px 260px at 10% 20%, rgba(156,210,254,0.14), transparent 18%),
-    radial-gradient(360px 220px at 90% 80%, rgba(190,197,249,0.10), transparent 14%),
-    linear-gradient(180deg, rgba(255,255,255,0.6), rgba(255,255,255,0.25));
-  border-radius: 12px;
-  box-shadow: 0 8px 24px rgba(2,6,23,0.06);
-}
-
-.navbar-brand img {
-  display: block;
-  width: auto;
-  max-height: 40px;      /* mobile */
-  height: auto;
-  object-fit: contain;
-  filter: drop-shadow(0 6px 18px rgba(2,6,23,0.06));
-}
-/* Medium and up 
-@media (min-width: 768px) {
-  .navbar-brand img { max-height: 30px; }
-}*/
-
-/* Large and up 
-@media (min-width: 1200px) {
-  .navbar-brand img { max-height: 40px; }
-}*/
-
-
-/* Optional: adjust brand font-size if using text */
-.navbar-brand .brand-text,
-.navbar-brand.logo-text {
-  font-size: 1.25rem;
-}
-
-/* Nav links */
-.navbar .nav-link{
-  font-size: 25px;
-  font-weight:600;
-  color: #000;
-  transition: color .22s ease, background .22s ease;
-  background: transparent;
-  border-radius: 8px;
-  padding: .35rem .35rem;
-  padding-top: 0.6rem;
-  margin: 0;
-}
-.navbar .nav-link:hover,
-.navbar .nav-link:focus{
-  color: #f8bff6;
-  background: linear-gradient(90deg, rgba(156,210,254,0.18), rgba(181,252,246,0.08));
-  box-shadow: 0 8px 22px rgba(6,35,58,0.06);
-  transform: translateY(-2px);
-}
-
-/* Make active / current link stand out */
-.navbar .nav-link.active{
-  color: #fff;
-  background: #58616a;
-  border-radius: 12px;
-  padding: .35rem 0;
-  box-shadow: 0 14px 36px rgba(6,35,58,0.10);
-  transform: translateY(-10px);
-  transition: transform .45s cubic-bezier(.22,.9,.35,1), opacity .35s ease;
-}
-
-/* Toggler button (visible on light bg) */
-.navbar .navbar-toggler {
-  border: 1px solid rgba(6,35,58,0.06);
-  background: linear-gradient(180deg, rgba(255,255,255,0.85), rgba(255,255,255,0.7));
-  transition: background .18s ease, transform .12s ease;
-}
-.navbar .navbar-toggler:active,
-.navbar .navbar-toggler:focus {
-  transform: scale(.98);
-}
-
-/* Toggler icon color */
-.navbar-light .navbar-toggler-icon{
-  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='%23222' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
-}
-
-/* Remove default caret */
-.dropdown-toggle::after{ display:none !important; }
-
-/* Cards / content */
-main .card{
-  border:0;
-  border-radius:12px;
-  overflow:hidden;
-  box-shadow: 0 10px 30px var(--shadow);
-}
-.card .card-body { background: linear-gradient(180deg, rgba(255,255,255,0.85), rgba(255,255,255,0.95)); }
-
-/* ---------- Dropdown slide & color styling ---------- */
-/* Dropdown color theme (replace previous dropdown rules) */
-.dropdown { position: relative; }
-
-.dropdown-menu{
-  position: absolute;
-  top: 100%;
-  left: 0;
-  z-index: 1200;
-  display: block;
-  min-width: 200px;
-  border-radius: 12px;
-  /* new background using palette */
-  background: #333 ;
-  text-shadow: 0px 0px 3px #000000;
-  border: 1px solid rgba(6,35,58,0.06);
-  box-shadow: 0 10px 15px rgba(255, 255, 255, 0.1);
-  padding: .35rem 0;
-  transform: translateY(-10px);
-  opacity: 0;
-  visibility: hidden;
-  pointer-events: none;
-  transition: transform .45s cubic-bezier(.22,.9,.35,1), opacity 0.35s ease, visibility .01s linear;
-  will-change: transform, opacity;
-  color: var(--text);
-}
-
-/* visible state */
-.dropdown.show > .dropdown-menu,
-.dropdown-menu.show {
-  transform: translateY(0);
-  opacity: 1;
-  visibility: visible;
-  pointer-events: auto;
-}
-
-/* dropdown items color */
-.dropdown-item{
-  color: #fff;
-  padding: .5rem 1rem;
-  transition: background .18s ease, color .12s ease;
-}
-
-/* item hover/focus - brighter gradient accent */
-.dropdown-item:hover,
-.dropdown-item:focus{
-  background: rgb(245, 200, 245);
-  color: #000;
-  transform: translateX(2px);
-}
-
-/* closing state */
-.dropdown.closing > .dropdown-menu,
-.dropdown-menu.closing{
-  transform: translateY(-14px);
-  opacity: 0;
-  visibility: visible;
-  pointer-events: none;
-}
-
-/* keep hover behavior on pointer devices */
-@media (hover: hover) and (pointer: fine){
-  .dropdown:hover > .dropdown-menu,
-  .dropdown:focus-within > .dropdown-menu{
-    transform: translateY(0);
-    opacity: 1;
-    visibility: visible;
-    pointer-events: auto;
-  }
-}
-
-/* Accessibility: keyboard focus shows menu */
-.dropdown:focus-within > .dropdown-menu{
-  transform: translateY(0);
-  opacity:1;
-  visibility:visible;
-  pointer-events:auto;
-}
-
-/* Small polish for page */
-/* Responsive spacing */
-@media (min-width:768px){
-  .navbar .nav-item + .nav-item{ margin-left:1.25rem; }
-  .dropdown-menu{ min-width:220px; }
-}
-
-/* Footer / minor accents (use palette) */
-a.logo-accent{ color: var(--c1); font-weight:700; }
-.badge-palette{
-  background: linear-gradient(90deg,var(--c1),var(--c2));
-  color:#082032;
-  border-radius:999px;
-  padding:.25rem .6rem;
-}
-.navbar-brand {
-  display: inline-flex;
-  align-items: center;
-  transition: transform 0.18s ease, filter 0.18s ease, box-shadow 0.18s ease;
-}
-
-.navbar-brand:hover,
-.navbar-brand:focus {
-  transform: scale(1.08); /* ขยายเล็กน้อย */
-  filter: drop-shadow(0 8px 20px rgba(2,6,23,0.1)); /* เงาเบา */
-  cursor: pointer;
-}
-  @media (max-width: 767.98px) {
-    /* Make sure submenus are hidden and have no pointer events */
-    .nav-item.dropdown > .dropdown-menu {
-      display: none !important;
-      visibility: hidden !important;
-      opacity: 0 !important;
-      pointer-events: none !important;
-      height: 0 !important;
-      margin: 0 !important;
-      padding: 0 !important;
+  <style>
+    .navbar .nav-link.active {
+      color: #fff;
+      background: #58616a;
+      border-radius: 12px;
+      padding: .35rem 0;
+      box-shadow: 0 14px 36px rgba(6, 35, 58, 0.10);
+      transform: translateY(-10px);
+      transition: transform .45s cubic-bezier(.22, .9, .35, 1), opacity .35s ease;
     }
-  }
 
-.container-contact {
-            display: flex; /* เปิดใช้งาน Flexbox สำหรับการแบ่งซ้ายขวา */
-            flex-wrap: wrap; /* อนุญาตให้คอลัมน์ขึ้นบรรทัดใหม่เมื่อหน้าจอแคบ */
-            min-height: 100vh; /* ให้เต็มความสูงของหน้าจอ */
-        }
+    /* Toggler button (visible on light bg) */
+    .navbar .navbar-toggler {
+      border: 1px solid rgba(6, 35, 58, 0.06);
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0.7));
+      transition: background .18s ease, transform .12s ease;
+    }
 
-        /* สไตล์สำหรับแต่ละคอลัมน์ */
-        .column {
-            flex: 1; /* ทำให้คอลัมน์ขยายตัวเท่าๆ กัน */
-            padding: 20px;
-            box-sizing: border-box;
-            min-width: 50%; /* กำหนดความกว้างขั้นต่ำก่อนจะขึ้นบรรทัดใหม่ */
-        }
+    .navbar .navbar-toggler:active,
+    .navbar .navbar-toggler:focus {
+      transform: scale(.98);
+    }
 
-        /* สไตล์สำหรับคอลัมน์ซ้าย (Contact) */
-        .left-column-contact {
-            display: flex;
-            flex-direction: column;
-            justify-content: center; /* จัดให้อยู่ตรงกลางแนวตั้ง */
-            align-items: center; /* จัดให้อยู่ตรงกลางแนวนอน */
-            text-align: center;
-        }
+    /* Toggler icon color */
+    .navbar-light .navbar-toggler-icon {
+      background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='%23222' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+    }
 
-        /* สไตล์สำหรับ "กล่อง" Contact ภายในคอลัมน์ซ้าย */
-        .contact-box {
-          background-color: aliceblue;
-            border: 2px solid #ccc;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow:   0 4px 8px rgba(190, 190, 190, 0.3);
-            max-width: 400px;
-            width: 100%;
-        }
+    main .card {
+      border: 0;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 10px 30px var(--shadow);
+    }
 
-        .contact-box h2 {
-            margin-top: 0;
-            color: #333;
-        }
+    .card .card-body {
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0.95));
+    }
 
-        /* สไตล์สำหรับไอคอนโซเชียล */
-        .social-icons a {
-            font-size: 30px;
-            margin: 0 15px;
-            color: #555;
-            transition: color 0.3s;
-            text-decoration: none;
-        }
+    /* Remove default caret */
+    .dropdown-toggle::after {
+      display: none !important;
+    }
+    
 
-        .social-icons a:hover {
-            color: #007bff; /* เปลี่ยนสีเมื่อโฮเวอร์ */
-        }
-
-        /* สไตล์เฉพาะไอคอน (ถ้าต้องการให้มีสีตามแบรนด์) */
-        .fa-facebook { color: #3b5998; }
-        .fa-instagram { color: #E1306C; }
-        .fa-tiktok { color: #000000; }
-
-        /* สไตล์สำหรับคอลัมน์ขวา (Image) */
-        .right-column-image {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .image-placeholder {
-            max-width: 60%;  
-        }
-
-        /* Media Query: สำหรับหน้าจอที่มีความกว้างน้อยกว่า 768px */
-        @media (max-width: 768px) {
-            .container-contact {
-                flex-direction: column; /* เรียงคอลัมน์ซ้อนกันในแนวตั้ง */
-            }
-
-            .column {
-                min-width: 100%; /* ให้แต่ละคอลัมน์กินพื้นที่เต็มความกว้าง */
-                height: auto;
-            }
-
-            /* กำหนดความสูงสำหรับรูปภาพในโหมดมือถือ */
-            .right-column-image {
-                min-height: 300px;
-            }
-            .image-placeholder {
-                max-width: 50%;  
-            }
-        }
-
-        /* Media Query: สำหรับหน้าจอ Desktop/Tablet */
-        @media (min-width: 769px) {
-            .left-column-contact {
-                /* กำหนดความกว้างเริ่มต้นให้คอลัมน์ซ้าย (ตัวอย่าง 40%) */
-                flex: 2; 
-            }
-            .right-column-image {
-                 /* กำหนดความกว้างเริ่มต้นให้คอลัมน์ขวา (ตัวอย่าง 60%) */
-                flex: 3;
-            }
-        }
-  /* ...existing CSS... */
-
-
-
-.footer {
-  background: linear-gradient(to right, #b4f0ff, #e0c3fc, #fbc2eb); /* ไล่สีพาสเทล */
-  color: #000;
-  padding: 20px 0;
-  text-align: center;
-  font-weight: 600;
-  position: relative;
-  bottom: 0;
-  width: 100%;
-  
-}
-
-.footer-content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 10px;
-}
-
-.social-links a {
-  color: #000;
-  margin: 0 8px;
-  font-size: 1.2rem;
-  transition: transform 0.3s, color 0.3s;
-}
-
-.social-links a:hover {
-  transform: scale(1.2);
-  color: #ff66c4;
-}
-</style>
+  </style>
 </head>
+
 <body>
-<nav class="navbar navbar-expand-md navbar-light navbar-gradient">
+  <nav class="navbar navbar-expand-md navbar-light navbar-gradient">
     <div class="container">
       <!-- Left: logo -->
       <a class="navbar-brand fw-bold mb-0" href="index.html"><img src="logowebsticker.webp" alt="logo"></a>
 
       <!-- Toggler for small screens -->
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav"
-              aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav" alt="menu"
+        aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
 
@@ -421,16 +85,7 @@ a.logo-accent{ color: var(--c1); font-weight:700; }
           </li>
 
           <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="work.html" id="workDropdown" role="button"
-               data-bs-toggle="dropdown" aria-expanded="false">
-              work
-            </a>
-            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="workDropdown">
-              <li><a class="dropdown-item" href="drawing.html">Drawing</a></li>
-              <li><a class="dropdown-item" href="graphic.html">Graphic</a></li>
-              <li><a class="dropdown-item" href="photo.html">Photo</a></li>
-              <li><a class="dropdown-item" href="3D.html">3D Model</a></li>
-            </ul>
+            <a class="nav-link" href="work.html">work</a>
           </li>
 
           <li class="nav-item">
@@ -444,89 +99,54 @@ a.logo-accent{ color: var(--c1); font-weight:700; }
       </div>
     </div>
   </nav>
- 
+
 
   <!-- contact Container -->
- <div class="container-contact">
-    
-    <div class="column left-column-contact">
-        <div class="contact-box">
-            <h2>Contact Us</h2>
-            <p>For more information, please contact us at:</p>
-            <div class="social-icons">
-                <a href="#" target="_blank" title="Facebook">
-                    <i class="fab fa-facebook"><img src="face.webp" alt="Facebook" style="max-width: 40px;"></i>
-                </a>
-                
-                <a href="#" target="_blank" title="Instagram">
-                    <i class="fab fa-instagram"><img src="IG.webp" alt="Instagram" style="max-width: 40px;"></i>
-                </a>
-                
-                <a href="#" target="_blank" title="TikTok">
-                    <i class="fab fa-tiktok"><img src="tiktok.webp" alt="TikTok" style="max-width: 40px;"></i>
-                </a>
-            </div>
+  <div class="container-contact">
+    <img src="starleft.webp" alt="" class="star-left">
+
+    <div class="contact-wrapper">
+
+      <div class="contact-details">
+        <div class="contact-item1">
+          <a> Contact </a>
         </div>
+        <div class="cont-fb">
+          <a href="https://www.facebook.com/profile.php?id=61584217357667" target="_blank"><i
+              class="fab fa-facebook-f"></i>
+            <p>Facebook</p>
+          </a>
+        </div>
+        <div class="cont-ig">
+          <a href="https://www.instagram.com/cutieverse_website/" target="_blank"><i class="fab fa-instagram"></i>
+            <p>Instagram</p>
+          </a>
+        </div>
+        <div class="cont-tiktok">
+          <a href="https://www.tiktok.com/@cutieverse_website" target="_blank"><i class="fab fa-tiktok"></i>
+            <p>TikTok</p>
+          </a>
+        </div>
+      </div>
     </div>
-    
-    <div class="column right-column-image">
-        <img src="contact.webp" alt="Placeholder Image" class="image-placeholder">
+    <img src="starright.webp" alt="" class="star-right">
+    <div class="wrapper-item2">
+      <div class="contact-item2"><img src="contact.webp" alt=""></div>
     </div>
 
-</div>
-    <footer class="footer">
-  <div class="footer-content">
-    <p>© 2025 Cutie Verse </p>
   </div>
-   </footer>
-    <script>
-  document.addEventListener('DOMContentLoaded', function () {
-    var hoverCapable = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+  <footer class="footer">
+    <div class="footer-content">
+      <p>© 2025 Cutie Verse </p>
+      <div class="social-links">
+        <a href="https://www.facebook.com/profile.php?id=61584217357667" target="_blank"><i
+            class="fab fa-facebook-f"></i></a>
+        <a href="https://www.instagram.com/cutieverse_website/" target="_blank"><i class="fab fa-instagram"></i></a>
+        <a href="https://www.tiktok.com/@cutieverse_website" target="_blank"><i class="fab fa-tiktok"></i></a>
+      </div>
+    </div>
+  </footer>
 
-    function updateDropdownBehavior() {
-      var isSmallScreen = window.matchMedia('(max-width: 767.98px)').matches;
-      document.querySelectorAll('.dropdown-toggle').forEach(function (toggle) {
-        if (isSmallScreen) {
-          toggle.removeAttribute('data-bs-toggle'); // mobile: no dropdown submenu
-          toggle.setAttribute('aria-expanded', 'false');
-        } else {
-          if (hoverCapable) {
-            toggle.removeAttribute('data-bs-toggle');
-          } else {
-            if (!toggle.hasAttribute('data-bs-toggle')) {
-              toggle.setAttribute('data-bs-toggle', 'dropdown');
-            }
-          }
-        }
-      });
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
-      // Close open dropdowns/collapses when switching to small screen
-      if (isSmallScreen && window.bootstrap) {
-        document.querySelectorAll('.dropdown.show').forEach(function(drop){
-          var toggle = drop.querySelector('.dropdown-toggle');
-          if (toggle) {
-            var dd = bootstrap.Dropdown.getInstance(toggle);
-            if (dd) dd.hide();
-          }
-        });
-        document.querySelectorAll('.collapse.show').forEach(function(c){
-          var bs = bootstrap.Collapse.getInstance(c);
-          if (bs) bs.hide();
-        });
-      }
-    }
-
-    updateDropdownBehavior();
-    var resizeTimer;
-    window.addEventListener('resize', function () {
-      clearTimeout(resizeTimer);
-      resizeTimer = setTimeout(updateDropdownBehavior, 120);
-    });
-    window.addEventListener('orientationchange', updateDropdownBehavior);
-
-    // Debug helper: log toggler clicks (ลบออกหลังทดสอบ)
-    document.querySelectorAll('.navbar-toggler').forEach(btn => btn.addEventListener('click', () => console.debug('toggler clicked')));
-  });
-  </script>
 </body>
-
